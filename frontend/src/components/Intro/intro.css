@@ -1,55 +1,108 @@
-#intro{
+#intro { 
     height: calc(100vh - 4rem);
     width: 100vw;
     max-width: 75rem;
     margin: 0 auto;
     overflow: hidden;
     position: relative;
+    display: flex;
+    align-items: center; /* Dikey hizalamayı koruyoruz */
+    justify-content: space-between; /* Yazı ve görseli yan yana hizalamak için */
+    padding: 0 2rem; /* Yan boşluklar ekledik */
+    box-sizing: border-box; /* Padding ve border'ın toplam genişliği etkilemesini sağlar */
 }
-.bg{
-position: absolute;
-top: -4rem;
-right: 0;
-z-index: -1;
-object-fit:cover ;
-height: 100vh;
+
+.bg {
+    object-fit: cover;
+    height: 90vh; /* Görseli biraz küçültüyoruz */
+    max-width: 45%; /* Görsel genişliğini ayarlıyoruz */
+    position: relative;
+    top: -7rem; /* Görseli yukarı taşıyoruz */
+    box-sizing: border-box; /* Padding ve border'ın toplam genişliği etkilemesini sağlar */
 }
-.introContent{
-    height: 100vh;
-    width: 100vw;
-    padding: 2rem;
-    font-size: 3rem;
+
+.introContent {
+    font-size: 2.5rem; /* Yazı boyutunu biraz küçültüyoruz */
     font-weight: 700;
+    color: #e8a6cd;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    max-width: 50%;
+    padding-right: 2rem; /* Görsel ve yazı arasındaki boşluğu artırıyoruz */
+    box-sizing: border-box; /* Padding ve border'ın toplam genişliği etkilemesini sağlar */
 }
-.hello{
+
+.hello {
     font-size: 1.75rem;
     font-weight: 100;
 }
-.introName{
-    color: yellow;
+
+.introName {
+    color: rgb(193, 42, 140);
 }
-.introPara{
-    font-size: small;
-    font-weight: 300;
-    letter-spacing: 1px;
+
+.introPara {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 auto 1rem; /* Açıklama metni için alt boşluğu azaltın */
+    max-width: 100%; /* Metni ekran boyutuna göre sınırlıyoruz */
+    line-height: 1.5; /* Yazıların biraz daha boşlukla yerleşmesi için */
+    box-sizing: border-box; /* Padding ve border'ın toplam genişliği etkilemesini sağlar */
 }
-.btn{
-    background: white;
-    margin: 1rem 0;
-    padding: 0.75rem 1.5rem;
+
+.btnGroup {
+    display: flex;
+    gap: 1rem; /* İki buton arasındaki boşluk */
+    flex-wrap: wrap; /* Butonların küçük ekranlarda taşmaması için */
+}
+
+.btn { 
+    background: rgb(193, 42, 140);
+    color: #ffffff;
+    margin: 0.5rem 0;
+    font-size: 1.3rem;
+    padding: 0.5rem 1rem; /* İç boşlukları ayarlıyoruz */
     border: none;
     border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem; /* İkon ile yazı arasındaki boşluk */
+    width: fit-content; /* Butonun genişliğini içeriğe göre ayarla */
+    box-sizing: border-box; /* Padding ve border'ın toplam genişliği etkilemesini sağlar */
 }
-.btnImg{
-    object-fit: cover;
-    margin: 0 0.25rem;
-    height: 1rem;
+
+.linkedinBtn {
+    background: #0077b5; /* LinkedIn için uygun arka plan rengi */
 }
-@media screen and (max-width:480px){
-    .bg{
-        right: -20vw;
+
+.linkedinIcon, .downloadIcon {
+    font-size: 1rem; /* İkon boyutunu ayarlayabilirsiniz */
+}
+
+@media screen and (max-width:650px) {
+    #intro {
+        flex-direction: column;
+        justify-content: center;
+        padding: 0; /* Küçük ekranlarda yan boşlukları kaldırıyoruz */
+        height: auto; /* Küçük ekranlarda yüksekliği otomatik ayarla */
+    }
+    
+    .bg {
+        height: auto; /* Görselin küçük ekranlarda daha iyi görünmesi için */
+        max-width: 100%; /* Görsel genişliğini ekran boyutuna göre ayarla */
+        top: 0; /* Görseli yukarı taşıyan değeri sıfırla */
+        margin-bottom: 2rem; /* Görselin altında boşluk ekle */
+    }
+    
+    .introContent {
+        max-width: 100%; /* İçeriğin ekran genişliğini kaplamasına izin ver */
+        padding-right: 0; /* Küçük ekranlarda sağ padding'i kaldır */
+    }
+    
+    .btnGroup {
+        flex-direction: column; /* Butonları küçük ekranlarda dikey hizala */
+        align-items: center; /* Butonları ortala */
     }
 }

@@ -1,5 +1,5 @@
-.navbar{
-    background: rgb(30,30,30);
+.navbar {
+    background: rgb(255, 255, 255);
     height: 5rem;
     width: 100vw;
     max-width: 75rem;
@@ -12,51 +12,58 @@
     top: 0;
     z-index: 3;
 }
-.logo{
+.logo {
     object-fit: cover;
     height: 3rem;
     width: 4rem;
 }
-.desktopMenuListItem{
+.desktopMenu {
+    display: flex;
+}
+.desktopMenuListItem {
     margin: 1rem;
     cursor: pointer;
+    color: rgb(193, 42, 140);; /* Varsayılan renk */
+    text-decoration: none; /* Alt çizgi kaldırıldı */
 }
-.desktopMenuListItem:hover{
-    color: yellow;
+.desktopMenuListItem:hover {
+    color: rgb(224, 155, 193);
     padding-bottom: 0.5rem;
-    border-bottom:3px solid yellow ;
+    border-bottom: 3px solid rgb(224, 155, 193);
 }
-.desktopMenuBtn{
-    background: white;
-    color: black;
+.desktopMenuBtn {
+    background: rgb(193, 42, 140);
+    color: rgb(255, 255, 255);
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 1rem;
-    border-radius: 2rem;
+    padding: 0.7rem 1.75rem; /* Daha geniş bir arka plan için padding artırıldı */
+    border-radius: 2.5rem; /* Kenarların yuvarlaklığı biraz artırıldı */
+    transition: background-color 0.3s ease, padding 0.3s ease; /* Geçiş efekti eklendi */
+    font-size: 1rem; /* Yazı boyutu artırıldı */
 }
 
-.desktopMenuImg{
-object-fit: cover;
-height: 1rem;
-width: 1rem;
-margin: 1rem;
+.desktopMenuBtn:hover {
+    background: rgb(224, 155, 193); /* Hover durumunda değişen arka plan rengi */
 }
 
-.active {
-    color: yellow;
-    padding-bottom: 0.5rem;
-    border-bottom: 3px solid yellow;
+.icon {
+    margin-right: 0.5rem;
+    font-size: 1.2rem; /* İkon boyutu */
+    transition: color 0.3s ease;
 }
 
-.mobMenu{
+.desktopMenuBtn:hover .icon {
+    color: rgb(255, 255, 255); /* Hover durumunda ikon beyaz olur */
+}
+
+.mobMenu {
     display: none;
     object-fit: cover;
     height: 1.8rem;
 }
-
-.navMenu{
+.navMenu {
     position: absolute;
     top: 4rem;
     right: 2rem;
@@ -64,27 +71,35 @@ margin: 1rem;
     display: flex;
     flex-direction: column;
     padding: 0.5rem;
-    height:fit-content;
-    min-width: 15rem;
-    background: rgb(30,30,30);
+    height: fit-content;
+    min-width: 10rem;
+    background: rgb(255, 255, 255);
     border-radius: 1rem;
 }
-
-.listItem{
-    color: white;
+.listItem {
+    color: rgb(255, 255, 255);
     padding: 0.5rem 3rem;
     margin: 0.25rem;
-    background: rgb(40,40,40);
+    background: rgb(193, 42, 140);
+    text-decoration: none; /* Alt çizgi kaldırıldı */
+    transition: color 0.3s ease; /* Geçiş efekti eklendi */
+    border-radius: 2.5rem;
 }
 
-@media screen and (max-width:720px){
-    .mobMenu{
+.listItem:hover {
+    color: rgb(255, 255, 255); 
+    background-color: rgb(224, 155, 193);
+
+}
+
+@media screen and (max-width: 720px) {
+    .mobMenu {
         display: flex;
     }
-    .desktopMenu{
+    .desktopMenu {
         display: none;
     }
-    .desktopMenuBtn{
+    .desktopMenuBtn {
         display: none;
     }
 }
