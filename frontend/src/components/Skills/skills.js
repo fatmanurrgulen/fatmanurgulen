@@ -1,4 +1,4 @@
-import React from 'react';  
+import React from 'react';   
 import Slider from 'react-slick'; 
 import 'slick-carousel/slick/slick.css'; 
 import 'slick-carousel/slick/slick-theme.css'; 
@@ -28,12 +28,11 @@ const Skills = () => {
     autoplay: true, 
     autoplaySpeed: 3000, 
     draggable: true, 
-    swipe: true, 
-    // Ok bileşenlerini kaldırdık
+    swipe: true,
   };
 
   return (
-    <div className="skills-section">
+    <section id="skills" className="skills-section">
       <h2>My Projects</h2>
       <p>
         React.js, Material UI, Node.js ve MySQL kullanarak oluşturduğum bu projede
@@ -48,7 +47,7 @@ const Skills = () => {
           </div>
         ))}
       </Slider>
-    </div>
+    </section>
   );
 }
 
