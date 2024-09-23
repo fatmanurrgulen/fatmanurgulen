@@ -13,7 +13,7 @@ const Intro = () => {
         <span className="introText">
           I'm <span className="introName">
             <Typewriter
-              words={['Fatmanur']}
+              words={['Fatmanur Gülen']}
               loop={true}
               cursor
               cursorStyle='|' // İmleç stili
