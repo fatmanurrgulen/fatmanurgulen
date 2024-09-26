@@ -1,0 +1,115 @@
+#intro { 
+  height: 100vh; 
+  width: 100%; 
+  max-width: 85rem; 
+  margin: 0 auto; 
+  overflow: hidden; 
+  position: relative; 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 2rem 2rem; /* Yukarı taşımak için padding azaltıldı */
+  box-sizing: border-box; 
+  margin-top: -5rem; /* Daha fazla yukarı taşımak için negatif margin artırıldı */
+}
+
+.intro-content {
+  flex: 1; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  margin-left: -1rem; /* Sol kenardan biraz daha yakın */
+}
+
+.intro-heading {
+  font-size: clamp(1.5rem, 3vw, 2.5rem); 
+  font-weight: bold; 
+  color: #e8a6cd; 
+}
+
+.intro-name {
+  color: #c12a8c; 
+  display: inline-block; 
+  white-space: nowrap; 
+}
+
+.intro-description {
+  font-size: 1rem; 
+  color: #666; 
+  margin: 1rem 0; 
+  max-width: 40rem; 
+}
+
+.btn-group {
+  display: flex; 
+  gap: 1rem; 
+  margin-top: 1rem; 
+}
+
+.btn {
+  background-color: #c12a8c; 
+  color: #fff; 
+  padding: 0.7rem 1.5rem; 
+  font-size: 1.2rem; 
+  border-radius: 2rem; 
+  display: flex; 
+  align-items: center; 
+  gap: 0.5rem; 
+  text-decoration: none; 
+  transition: background-color 0.3s ease; 
+}
+
+.btn:hover {
+  background-color: #e09bc1; 
+}
+
+.intro-bg-wrapper {
+  flex: 1; 
+  display: flex; 
+  justify-content: center; 
+  margin-right: -2rem; 
+}
+
+.intro-bg {
+  width: 20rem; 
+  height: 20rem; 
+  background-color: #f7df1e; 
+  border-radius: 50%; 
+  object-fit: cover; 
+}
+
+/* Mobil uyumlu ayarlar */
+@media (max-width: 850px) {
+  #intro {
+      flex-direction: column; 
+      justify-content: center; 
+  }
+
+  .intro-bg-wrapper {
+      margin-top: 2rem; 
+  }
+
+  .btn-group {
+      flex-direction: initial; 
+  }
+
+  .btn {
+      width: 100%; 
+  }
+}
+
+@media (max-width: 500px) {
+  .intro-heading {
+      font-size: clamp(1.25rem, 4vw, 1.5rem); 
+  }
+
+  .intro-bg {
+      width: 12rem; 
+      height: 12rem; 
+  }
+
+  .intro-description {
+      font-size: 0.9rem; 
+  }
+}

@@ -1,0 +1,112 @@
+.navbar {
+    background: rgb(255, 255, 255);
+    height: 5rem;
+    width: 100vw;
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 0 1rem; /* Üst ve alt boşluğu daha da azalt */
+    display: flex;
+    align-items: center; /* Dikey hizalamayı koru */
+    justify-content:space-between; /* Elemanları kenar boşluklarıyla hizala */
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
+
+/* Logo styling */
+.logo {
+    object-fit: cover;
+    height: 2.5rem;
+    width: 13rem; /* Logo boyutu */
+    cursor: pointer;
+    margin-right: 0.5rem;
+    margin-left: 4rem;; /* Butonla aradaki boşluğu azalt */
+}
+
+/* Button styling for desktop */
+.desktopMenuBtn {
+    background: #c12a8c;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.75rem; /* Butonun iç boşlukları */
+    border-radius: 2.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-right: 10rem; 
+    margin-bottom: 0; /* Altındaki boşluğu kaldır */
+    align-self: center; /* Butonu ortala */
+}
+
+.desktopMenuBtn:hover {
+    background: #e09bc1;
+}
+.img {
+    margin-top: 0; /* Resmin üstündeki boşluğu kaldır */
+    padding-top: 0; /* Eğer padding varsa, onu da kaldır */
+}
+/* Mobile Menu Icon */
+.mobMenu {
+    display: none;
+    height: 1.8rem;
+}
+
+/* Mobile Dropdown Menu */
+.navMenu {
+    position: absolute;
+    top: 4rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    background: white;
+    border-radius: 1rem;
+}
+
+/* Mobile Menu Item */
+.listItem {
+    color: white;
+    background: #c12a8c;
+    padding: 0.5rem 3rem;
+    margin: 0.25rem;
+    border-radius: 2.5rem;
+    text-decoration: none;
+}
+
+.listItem:hover {
+    background-color: #e09bc1;
+}
+
+/* Responsive Design for Mobile Devices */
+@media screen and (max-width: 720px) {
+    /* Navbar padding reduced for mobile */
+    .navbar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.3rem 0.5rem; /* Daha fazla boşluk azaltıldı */
+    }
+
+    /* Logo size reduced for small screens */
+    .logo {
+        height: 2rem;
+        width: 8rem; /* Küçük ekranlar için logo boyutu daha da küçültüldü */
+        margin-right: 0.2rem; /* Butona çok daha yakınlaştırıldı */
+    }
+
+    /* Button padding and margin adjusted for small screens */
+    .desktopMenuBtn {
+        padding: 0.3rem 1rem; /* Buton padding'i azaltıldı */
+        margin-left: 0; /* Buton ile logo arasındaki boşluk kaldırıldı */
+        display: none;
+     }
+
+    /* Show mobile menu icon */
+    .mobMenu {
+        display: flex;
+    }
+
+    /* Hide desktop menu button on small screens */
+    .desktopMenuBtn {
+        display: none;
+    }
+}
