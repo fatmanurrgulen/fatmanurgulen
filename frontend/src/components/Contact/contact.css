@@ -1,4 +1,4 @@
-#contactPage {
+/* #contactPage {
     min-height: calc(100vh - 4rem);
     width: 100vw;
     max-width: 60rem;
@@ -26,18 +26,18 @@
 }
 
 .techIcons svg {
-    font-size: 3rem; /* İkon boyutunu ayarlayın */
-    margin: 0 2rem; /* İkonlar arasındaki boşluk */
-    color: rgb(255, 255, 255); /* İkon rengi */
-    background-color: rgb(193, 42, 140); /* Arka plan rengi */
-    border-radius: 50%; /* Arka planı yuvarlak yapar */
-    padding: 0.5rem; /* Arka planın etrafında boşluk bırakır */
+    font-size: 3rem; 
+    margin: 0 2rem; 
+    color: rgb(255, 255, 255); 
+    background-color: rgb(193, 42, 140); 
+    border-radius: 50%; 
+    padding: 0.5rem; 
     transition: transform 0.3s ease;
 }
 
 
 .techIcons svg:hover {
-    transform: scale(1.1); /* Hover etkisi */
+    transform: scale(1.1); 
 }
 
 .contactForm {
@@ -78,4 +78,4 @@
 
 .submitBtn:hover {
     background-color: #a12270;
-}
+} 

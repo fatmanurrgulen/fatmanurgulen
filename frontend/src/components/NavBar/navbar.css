@@ -1,14 +1,13 @@
-/* Navbar styling */
 .navbar {
-    background: white;
+    background: rgb(255, 255, 255);
     height: 5rem;
     width: 100vw;
-    max-width: 75rem;
+    max-width: 120rem;
     margin: 0 auto;
-    padding: 0.5rem 1rem; /* Padding azaltıldı */
+    padding: 0 1rem; /* Üst ve alt boşluğu daha da azalt */
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: center; /* Dikey hizalamayı koru */
+    justify-content:space-between; /* Elemanları kenar boşluklarıyla hizala */
     position: sticky;
     top: 0;
     z-index: 3;
@@ -17,10 +16,11 @@
 /* Logo styling */
 .logo {
     object-fit: cover;
-    height: 2rem;
-    width: 9rem; /* Logo boyutu küçültüldü */
+    height: 2.5rem;
+    width: 13rem; /* Logo boyutu */
     cursor: pointer;
-    margin-right: 0.3rem; /* Butonla aradaki boşluk azaltıldı */
+    margin-right: 0.5rem;
+    margin-left: 4rem;; /* Butonla aradaki boşluğu azalt */
 }
 
 /* Button styling for desktop */
@@ -28,18 +28,18 @@
     background: #c12a8c;
     color: white;
     border: none;
-    padding: 0.7rem 1.75rem;
+    padding: 0.7rem 1.75rem; /* Butonun iç boşlukları */
     border-radius: 2.5rem;
     font-size: 1rem;
     cursor: pointer;
-    margin-left: 0.2rem;
-    margin-bottom: 0.5rem; /* Altındaki boşluğu azalt */
+    margin-right: 10rem; 
+    margin-bottom: 0; /* Altındaki boşluğu kaldır */
+    align-self: center; /* Butonu ortala */
 }
 
 .desktopMenuBtn:hover {
     background: #e09bc1;
 }
-
 .img {
     margin-top: 0; /* Resmin üstündeki boşluğu kaldır */
     padding-top: 0; /* Eğer padding varsa, onu da kaldır */
@@ -97,7 +97,8 @@
     .desktopMenuBtn {
         padding: 0.3rem 1rem; /* Buton padding'i azaltıldı */
         margin-left: 0; /* Buton ile logo arasındaki boşluk kaldırıldı */
-    }
+        display: none;
+     }
 
     /* Show mobile menu icon */
     .mobMenu {

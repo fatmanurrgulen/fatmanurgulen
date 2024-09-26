@@ -1,44 +1,48 @@
-import React from 'react'; 
+import React from 'react';
 import { Typewriter } from 'react-simple-typewriter';
-import './intro.css';  // Stil dosyanızı ekleyin
+import { FaDownload, FaGithub } from 'react-icons/fa';
+import './intro.css';
 import bg from '../../assets/image.png';
-import { FaDownload } from 'react-icons/fa';
-
 
 const Intro = () => {
   return (
-    <section id="intro">
-      <div className="introContent">
-        <span className="hello">Hello<br /></span>
-        <span className="introText">
-          I'm <span className="introName">
+    <section id="intro" className="intro-section">
+      <div className="intro-content">
+        <h1 className="intro-heading">
+          Hello, <br />
+          I'm <span className="intro-name">
             <Typewriter
               words={['Fatmanur Gülen']}
-              loop={true}
+              loop
               cursor
-              cursorStyle='|' // İmleç stili
-              typeSpeed={100}  // Yazma hızı
-              deleteSpeed={100} // Silme hızı
-              delaySpeed={1500} // Yazıldıktan sonra bekleme süresi
-              style={{ display: 'inline' }} // Yazıyı düz tutmak için
+              cursorStyle="|"
+              typeSpeed={100}
+              deleteSpeed={100}
+              delaySpeed={1500}
             />
-          </span> <br /> Front-End Developer
-        </span>
-        <p className="introPara">
-        As a passionate frontend developer, I am focused  on developing
-my skills to create user-friendly  and visually engaging interfaces. I am committed to
-continuously learning and staying updated with the latest technologies.  My enthusiasm
-for front-end development drives me to improve and adapt in thisfast-evolving field. I
-thrive in collaborative environments where I can contribute and learn from others.
+          </span>
+          <br />
+          Front-End Developer
+        </h1>
+        <p className="intro-description">
+          As a passionate frontend developer, I am focused on developing user-friendly and visually engaging interfaces. I am committed to continuously learning and staying updated with the latest technologies. My enthusiasm for front-end development drives me to improve and adapt in this fast-evolving field.
         </p>
-        <div className="btnGroup">
-        <a href="/FatmaNurGulen_Cv.pdf" download="FatmaNurGulen_CV.pdf" className="btn">
-  <FaDownload /> Download CV
-</a>
+
+        <div className="btn-group">
+          <a href="/FatmaNurGulen_Cv.pdf" download="FatmaNurGulen_CV.pdf" className="btn">
+            <FaDownload /> Download CV
+          </a>
+          <a href="https://github.com/fatmanurrgulen" target="_blank" rel="noopener noreferrer" className="btn github-btn">
+            <FaGithub /> GitHub
+          </a>
         </div>
       </div>
-      <img src={bg} alt="profile" className="bg"/>    </section>
-  )
-}
+
+      <div className="intro-bg-wrapper">
+        <img src={bg} alt="profile" className="intro-bg" />
+      </div>
+    </section>
+  );
+};
 
 export default Intro;
