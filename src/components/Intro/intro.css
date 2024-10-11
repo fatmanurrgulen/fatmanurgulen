@@ -1,115 +1,224 @@
 #intro { 
-  height: 100vh; 
-  width: 100%; 
-  max-width: 85rem; 
-  margin: 0 auto; 
-  overflow: hidden; 
-  position: relative; 
-  display: grid; 
-  grid-template-columns: 1fr 1fr; 
-  align-items: center; 
-  justify-content: center; 
-  padding: 2rem 2rem; /* Yukarı taşımak için padding azaltıldı */
-  box-sizing: border-box; 
-  margin-top: -5rem; /* Daha fazla yukarı taşımak için negatif margin artırıldı */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-content: center; /* Yazı ve resmi dengeli şekilde ayırmak için */
+  height: 100vh;
+  max-width: 85rem;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden; /* Taşmayı önlemek için */
+  text-align: center; /* İçeriği ortalamak için */
 }
 
 .intro-content {
-  flex: 1; 
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center; 
-  margin-left: -1rem; /* Sol kenardan biraz daha yakın */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0; /* Sol kaymayı önlemek için sıfırlandı */
+  position: relative; /* İçeriği konumlandırmak için gerekli */
+  z-index: 1; 
 }
 
 .intro-heading {
-  font-size: clamp(1.5rem, 3vw, 2.5rem); 
-  font-weight: bold; 
-  color: #e8a6cd; 
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: bold;
+  color: #e8a6cd;
 }
 
 .intro-name {
-  color: #c12a8c; 
-  display: inline-block; 
-  white-space: nowrap; 
+  color: #c12a8c;
+  white-space: nowrap;
 }
 
 .intro-description {
-  font-size: 1rem; 
-  color: #666; 
-  margin: 1rem 0; 
-  max-width: 40rem; 
+  font-size: 1rem;
+  color: #666;
+  margin: 1rem 0;
+  max-width: 40rem;
 }
 
 .btn-group {
-  display: flex; 
-  gap: 1rem; 
-  margin-top: 1rem; 
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center; /* Butonları ortalamak için */
 }
 
 .btn {
-  background-color: #c12a8c; 
-  color: #fff; 
-  padding: 0.7rem 1.5rem; 
-  font-size: 1.2rem; 
-  border-radius: 2rem; 
-  display: flex; 
-  align-items: center; 
-  gap: 0.5rem; 
-  text-decoration: none; 
-  transition: background-color 0.3s ease; 
+  background-color: #c12a8c;
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.2rem;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
 .btn:hover {
-  background-color: #e09bc1; 
+  background-color: #e09bc1;
 }
 
-.intro-bg-wrapper {
-  flex: 1; 
-  display: flex; 
-  justify-content: center; 
-  margin-right: -2rem; 
+@keyframes moveAndScale {
+  0% {
+    transform: scale(1); /* Başlangıç boyutu */
+  }
+  100% {
+    transform: scale(1.1); /* Büyütme efekti */
+  }
 }
 
 .intro-bg {
-  width: 20rem; 
-  height: 20rem; 
-  background-color: #f7df1e; 
-  border-radius: 50%; 
-  object-fit: cover; 
+  width: 22rem;
+  height: 22rem;
+  background-color: #f7df1e;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+
+  /* Animasyonu burada uygularız */
+  animation: moveAndScale 5s infinite alternate; /* Sadece büyütüp küçülme efekti */
+  
+  /* Resmi en üstte tutmak için */
+  z-index: 2;
 }
 
-/* Mobil uyumlu ayarlar */
-@media (max-width: 850px) {
+/* Yazı ve resim arasındaki boşluk */
+.intro-bg-wrapper {
+  margin-left: 2rem; /* Resim ile yazı arasındaki boşluk */
+}
+
+@media (max-width: 1000px) {
   #intro {
-      flex-direction: column; 
-      justify-content: center; 
+    grid-template-columns: 1fr; /* Tek sütun düzeni */
+    padding: 2rem 1rem; /* İçerik için daha fazla boşluk */
+    text-align: center; /* Metni ortala */
   }
 
   .intro-bg-wrapper {
-      margin-top: 2rem; 
+    margin: 1rem 0; /* Resim için yukarıdan ve aşağıdan boşluk */
+  }
+
+  .intro-bg {
+    width: 20rem; /* Resmin genişliği */
+    height: 20rem; /* Resmin yüksekliği */
+  }
+
+  .intro-heading {
+    font-size: clamp(1.5rem, 3vw, 2rem); /* Başlık boyutunu ayarla */
+  }
+
+  .intro-description {
+    font-size: 0.9rem; /* Açıklama boyutunu ayarla */
+    max-width: 90%; /* Açıklamanın genişliğini ayarla */
+    margin: 0 auto; /* Ortala */
   }
 
   .btn-group {
-      flex-direction: initial; 
+    flex-direction: row; /* Butonları yan yana hizala */
+    justify-content: center; /* Butonları ortalamak için */
   }
 
   .btn {
-      width: 100%; 
+    width: 13rem; /* Buton genişliği */
+  }
+}
+
+@media (max-width: 700px) {
+  #intro {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  .intro-content {
+    margin: 0; /* Yazıyı daha ortalı hale getirmek için */
+  }
+
+  .intro-bg-wrapper {
+    margin: 2rem 0; /* Resmin daha dengeli yerleşmesi için */
+  }
+
+  .intro-bg {
+    width: 20rem;
+    height: 20rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .intro-bg-wrapper {
+    margin-right: 0;
+    margin-top: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .intro-bg {
+    width: 16rem;
+    height: 16rem;
+  }
+
+  .intro-heading {
+    font-size: clamp(1.2rem, 4vw, 1.4rem);
+  }
+
+  .intro-description {
+    font-size: 0.85rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 500px) {
   .intro-heading {
-      font-size: clamp(1.25rem, 4vw, 1.5rem); 
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
   }
 
   .intro-bg {
-      width: 12rem; 
-      height: 12rem; 
+    width: 12rem;
+    height: 12rem;
   }
 
   .intro-description {
-      font-size: 0.9rem; 
+    font-size: 0.9rem;
   }
+}
+
+.bubble {
+  position: absolute;
+  background-color: #e09bc1;
+  border-radius: 50%;
+  pointer-events: none; /* Fare olaylarını engelle */
+  animation: rise 5s infinite; /* Yükselme animasyonu */
+  z-index: 0; /* Baloncukların arka planda görünmesi için */
+}
+
+.bubble-1 { width: 20px; height: 20px; top: 30%; left: 10%; animation-delay: 0s; }
+.bubble-2 { width: 30px; height: 30px; top: 50%; left: 25%; animation-delay: 1s; }
+.bubble-3 { width: 25px; height: 25px; top: 70%; left: 40%; animation-delay: 2s; }
+.bubble-4 { width: 15px; height: 15px; top: 80%; left: 60%; animation-delay: 3s; }
+.bubble-5 { width: 35px; height: 35px; top: 40%; left: 80%; animation-delay: 4s; }
+.bubble-6 { width: 20px; height: 20px; top: 20%; left: 15%; animation-delay: 0.5s; }
+.bubble-7 { width: 25px; height: 25px; top: 60%; left: 30%; animation-delay: 1.5s; }
+.bubble-8 { width: 30px; height: 30px; top: 45%; left: 55%; animation-delay: 2.5s; }
+.bubble-9 { width: 15px; height: 15px; top: 75%; left: 70%; animation-delay: 3.5s; }
+.bubble-10 { width: 40px; height: 40px; top: 35%; left: 85%; animation-delay: 4.5s; }
+.bubble-11 { width: 35px; height: 35px; top: 40%; left: 80%; animation-delay: 4s; }
+.bubble-12 { width: 20px; height: 20px; top: 20%; left: 15%; animation-delay: 0.5s; }
+.bubble-13 { width: 25px; height: 25px; top: 60%; left: 30%; animation-delay: 1.5s; }
+.bubble-14 { width: 30px; height: 30px; top: 45%; left: 55%; animation-delay: 2.5s; }
+.bubble-15 { width: 15px; height: 15px; top: 75%; left: 70%; animation-delay: 3.5s; }
+
+@keyframes rise {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100px); opacity: 0; }
 }

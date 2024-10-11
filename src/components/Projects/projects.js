@@ -1,11 +1,12 @@
-import React, { useState } from 'react';   
+import React, { useState } from 'react';
 import { Container, Typography, Grid, Card, CardContent, Chip, IconButton } from '@mui/material';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Canvas } from '@react-three/fiber'; // 3D için Canvas
+import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei'; // 3D bileşenler
 
-// Tema ayarları
 const theme = createTheme();
 
 // Stil edilmiş kart
@@ -20,25 +21,37 @@ const StyledCard = styled(Card)(({ theme }) => ({
     transform: 'translateY(-5px)',
     boxShadow: theme.shadows[10],
   },
+  width: '100%',
+  maxWidth: '450px',
+  '@media (max-width: 600px)': {
+    '&:hover': {
+      transform: 'none',
+      boxShadow: theme.shadows[5],
+    },
+  },
 }));
 
 // Arka kart - kısmi görünümlü proje
 const PartialShadowCard = styled(Card)(({ theme }) => ({
   position: 'absolute',
   top: '10%',
-  right: '-15px',
+  right: '-10px',
   width: '80%',
   height: '80%',
   opacity: 0.4,
   borderRadius: '10px',
-  backgroundColor: 'rgba(245, 245, 245, 0.9)', // Yarı saydam beyaz
+  backgroundColor: 'rgba(245, 245, 245, 0.9)',
   boxShadow: theme.shadows[3],
   zIndex: 0,
+  '@media (max-width: 600px)': {
+    display: 'none',
+  },
 }));
 
 // Animasyon ayarları
 const cardVariants = {
-  hidden: { opacity: 0, rotateY: 180, x: 300 },
+  hiddenRight: { opacity: 0, rotateY: 180, x: 300 },
+  hiddenLeft: { opacity: 0, rotateY: -180, x: -300 },
   visible: (index) => ({
     opacity: 1,
     rotateY: 0,
@@ -50,12 +63,13 @@ const cardVariants = {
       stiffness: 60,
     },
   }),
-  exit: { opacity: 0, rotateY: 180, x: -300, transition: { duration: 0.6 } },
+  exitRight: { opacity: 0, rotateY: 180, x: -300, transition: { duration: 0.6 } },
+  exitLeft: { opacity: 0, rotateY: -180, x: 300, transition: { duration: 0.6 } },
 };
 
-// Projeler bileşeni
 const Projects = () => {
   const [activeProject, setActiveProject] = useState(0);
+  const [direction, setDirection] = useState('right'); // Yeni state: yönü takip eder
 
   const projectData = [
     {
@@ -85,30 +99,40 @@ const Projects = () => {
   ];
 
   const handleNextProject = () => {
+    setDirection('right'); // Yönü günceller
     setActiveProject((prevIndex) => (prevIndex + 1) % projectData.length);
   };
 
   const handlePrevProject = () => {
+    setDirection('left'); // Yönü günceller
     setActiveProject((prevIndex) => (prevIndex - 1 + projectData.length) % projectData.length);
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Container sx={{ marginTop: 4, padding: '20px', backgroundColor: '#fff', borderRadius: '10px' }}>
-        <Typography variant="h4" component="h2" gutterBottom align="center" sx={{ fontWeight: 'bold', color: '#c12a8c' }}>
+      <Container sx={{ marginTop: 4, padding: '20px', backgroundColor: '#fff', borderRadius: '10px', position: 'relative' }}>
+        <Canvas style={{ position: 'absolute', top: 0, left: 0, zIndex: 0, height: '100%', width: '100%' }}>
+          <OrbitControls enableZoom={false} />
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[2, 5, 2]} />
+          <Sphere args={[1, 100, 200]} scale={2.4}>
+            <MeshDistortMaterial color="#8352FD" attach="material" distort={0.5} speed={2} />
+          </Sphere>
+        </Canvas>
+
+        <Typography variant="h4" component="h2" gutterBottom align="center" sx={{ fontWeight: 'bold', color: '#c12a8c', zIndex: 1, position: 'relative' }}>
           Projects
         </Typography>
         <Grid container spacing={4} justifyContent="center">
-          <Grid item xs={12} sm={6} md={4} sx={{ position: 'relative' }}>
-            {/* Sol ok butonu */}
-            <IconButton 
-              sx={{ 
-                position: 'absolute', 
-                left: '-40px', 
-                top: '50%', 
-                transform: 'translateY(-50%)', 
-                zIndex: 2 // z-index ekle
-              }} 
+          <Grid item xs={12} sm={8} md={6} sx={{ position: 'relative' }}>
+            <IconButton
+              sx={{
+                position: 'absolute',
+                left: '-30px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 2,
+              }}
               onClick={handlePrevProject}
             >
               <ArrowBackIosIcon />
@@ -116,13 +140,12 @@ const Projects = () => {
 
             <motion.div
               key={activeProject}
-              initial="hidden"
+              initial={direction === 'right' ? 'hiddenRight' : 'hiddenLeft'}
               animate="visible"
-              exit="exit"
+              exit={direction === 'right' ? 'exitRight' : 'exitLeft'}
               variants={cardVariants}
               style={{ perspective: 1000 }}
             >
-              {/* Kısmi görünümlü arka proje kartı */}
               <PartialShadowCard>
                 <CardContent>
                   <Typography variant="h6" component="h3" gutterBottom sx={{ color: '#c12a8c' }}>
@@ -134,8 +157,7 @@ const Projects = () => {
                 </CardContent>
               </PartialShadowCard>
 
-              {/* Öndeki aktif proje kartı */}
-              <StyledCard onClick={handleNextProject}> {/* Tıklama olayı ekleniyor */}
+              <StyledCard onClick={handleNextProject}>
                 <CardContent>
                   <Typography variant="h5" component="h3" gutterBottom sx={{ color: '#c12a8c' }}>
                     {projectData[activeProject].title}
@@ -150,11 +172,11 @@ const Projects = () => {
                   </Typography>
                   <div>
                     {projectData[activeProject].technologies.map((tech, idx) => (
-                      <Chip 
-                        key={idx} 
-                        label={tech} 
-                        variant="outlined" 
-                        sx={{ margin: '2px', backgroundColor: '#e8a6cd', color: '#c12a8c' }} 
+                      <Chip
+                        key={idx}
+                        label={tech}
+                        variant="outlined"
+                        sx={{ margin: '2px', backgroundColor: '#e8a6cd', color: '#c12a8c' }}
                       />
                     ))}
                   </div>
@@ -162,15 +184,14 @@ const Projects = () => {
               </StyledCard>
             </motion.div>
 
-            {/* Sağ ok butonu */}
-            <IconButton 
-              sx={{ 
-                position: 'absolute', 
-                right: '-70px', 
-                top: '50%', 
-                transform: 'translateY(-50%)', 
-                zIndex: 2 // z-index ekle
-              }} 
+            <IconButton
+              sx={{
+                position: 'absolute',
+                right: '-30px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 2,
+              }}
               onClick={handleNextProject}
             >
               <ArrowForwardIosIcon />
