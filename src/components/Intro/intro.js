@@ -1,48 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'; 
 import { Typewriter } from 'react-simple-typewriter';
 import { FaDownload, FaGithub } from 'react-icons/fa';
 import './intro.css';
 import bg from '../../assets/image.png';
 
 const Intro = () => {
-  useEffect(() => {
-    const introBg = document.querySelector('.intro-bg');
-
-    const handleMouseMove = (event) => {
-      const rect = introBg.getBoundingClientRect();
-      const imgX = rect.left + rect.width / 2;
-      const imgY = rect.top + rect.height / 2;
-
-      const deltaX = event.clientX - imgX;
-      const deltaY = event.clientY - imgY;
-
-      const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
-
-      if (distance < 100) {
-        const moveX = (deltaX / distance) * 30;
-        const moveY = (deltaY / distance) * 30;
-
-        introBg.style.transform = `translate(${-moveX}px, ${-moveY}px)`;
-        introBg.style.animation = 'moveAndScale 0.5s forwards';
-      } else {
-        introBg.style.animation = '';
-      }
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-
-    // Cleanup function
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
+  // Fare hareketine bağlı resmi kaçırma işlemi kaldırıldı.
   return (
     <section id="intro" className="intro-section">
       <div className="intro-content">
         <h1 className="intro-heading">
-          Hello, <br />
-          I'm <span className="intro-name">
+          Selamlar, <br />
+          Ben <span className="intro-name">
             <Typewriter
               words={['Fatmanur Gülen']}
               loop
@@ -54,11 +23,10 @@ const Intro = () => {
             />
           </span>
           <br />
-          Front-End Developer
+          Front-End Geliştiriciyim
         </h1>
         <p className="intro-description">
-          As a passionate frontend developer, I am focused on developing user-friendly and visually engaging interfaces. I am committed to continuously learning and staying updated with the latest technologies. My enthusiasm for front-end development drives me to improve and adapt in this fast-evolving field.
-        </p>
+        Modern web teknolojileriyle kullanıcı dostu, estetik ve işlevsel arayüzler tasarlayan bir frontend geliştiricisiyim. React.js ve Next.js gibi güçlü frameworklerle projeler geliştiriyor, aynı zamanda mobil uyumlu ve responsive tasarımlar oluşturuyorum. Takım çalışmasında uyumlu bir şekilde çalışarak, her ekran boyutunda mükemmel çalışan, akıcı ve şık web deneyimleri sunmaya özen gösteriyorum.        </p>
 
         <div className="btn-group">
           <a href="/FatmaNurGulen_Cv.pdf" download="FatmaNurGulen_CV.pdf" className="btn">

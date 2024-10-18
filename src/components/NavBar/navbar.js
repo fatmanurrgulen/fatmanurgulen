@@ -1,7 +1,6 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import './navbar.css';
 import logo from '../../assets/logo.png';
-import { Link } from 'react-scroll';
 import menu from '../../assets/menu.png';
 
 const Navbar = () => {
@@ -10,6 +9,12 @@ const Navbar = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  const scrollToContact = () => {
+    document.getElementById('contact').scrollIntoView({
       behavior: 'smooth'
     });
   };
@@ -27,9 +32,7 @@ const Navbar = () => {
       {/* Desktop Menu Button */}
       <button 
         className="desktopMenuBtn" 
-        onClick={() => {
-          document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-        }}
+        onClick={scrollToContact}
       >
         Contact Me
       </button>
@@ -47,18 +50,15 @@ const Navbar = () => {
         className="navMenu" 
         style={{ display: showMenu ? 'flex' : 'none' }}
       >
-        <Link 
-          activeClass='active' 
-          to='contact' 
-          spy={true} 
-          smooth={true} 
-          offset={-50} 
-          duration={500} 
-          className="listItem" 
-          onClick={() => setShowMenu(!showMenu)}
+        <button 
+          className="mobileMenuBtn" 
+          onClick={() => {
+            scrollToContact();
+            setShowMenu(false); // Menü kapansın
+          }}
         >
-          Contact
-        </Link>
+          Contact Me
+        </button>
       </div>
     </nav>
   );
