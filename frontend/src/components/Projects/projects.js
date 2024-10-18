@@ -1,14 +1,13 @@
-import React, { useState } from 'react';   
+import React, { useState, useEffect } from 'react';    
 import { Container, Typography, Grid, Card, CardContent, Chip, IconButton } from '@mui/material';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-// Tema ayarları
 const theme = createTheme();
 
-// Stil edilmiş kart
+// Stil edilmiş ana kart
 const StyledCard = styled(Card)(({ theme }) => ({
   transition: 'transform 0.3s, box-shadow 0.3s',
   borderRadius: '10px',
@@ -17,28 +16,51 @@ const StyledCard = styled(Card)(({ theme }) => ({
   position: 'relative',
   zIndex: 1,
   '&:hover': {
-    transform: 'translateY(-5px)',
+    transform: 'scale(1.05)',
     boxShadow: theme.shadows[10],
+  },
+  width: '100%',
+  maxWidth: '450px',
+  '@media (max-width: 600px)': {
+    maxWidth: '90%',
   },
 }));
 
-// Arka kart - kısmi görünümlü proje
-const PartialShadowCard = styled(Card)(({ theme }) => ({
+// Stil edilmiş arka plan kartı
+const BackgroundCard = styled(Card)(({ theme }) => ({
   position: 'absolute',
-  top: '10%',
-  right: '-15px',
-  width: '80%',
-  height: '80%',
-  opacity: 0.4,
+  top: '54%',
+  right: '13%', 
+  width: '70%',
+  height: '77%',
+  backgroundColor: 'white',
   borderRadius: '10px',
-  backgroundColor: 'rgba(245, 245, 245, 0.9)', // Yarı saydam beyaz
-  boxShadow: theme.shadows[3],
   zIndex: 0,
+  boxShadow: theme.shadows[2],
+  opacity: 0.6,
+  transform: 'translateY(-50%)',
+ 
 }));
 
-// Animasyon ayarları
+// Dalgalanma animasyonu
+const waveAnimation = {
+  hidden: { x: 0, opacity: 0 },
+  visible: {
+    x: [0, -20, 20, 0],
+    opacity: 1,
+    transition: {
+      duration: 2,
+      ease: 'easeInOut',
+      repeat: Infinity,
+      repeatType: 'reverse',
+    },
+  },
+};
+
+// Kart animasyonları
 const cardVariants = {
-  hidden: { opacity: 0, rotateY: 180, x: 300 },
+  hiddenRight: { opacity: 0, rotateY: 180, x: 300 },
+  hiddenLeft: { opacity: 0, rotateY: -180, x: -300 },
   visible: (index) => ({
     opacity: 1,
     rotateY: 0,
@@ -50,132 +72,258 @@ const cardVariants = {
       stiffness: 60,
     },
   }),
-  exit: { opacity: 0, rotateY: 180, x: -300, transition: { duration: 0.6 } },
+  exitRight: { opacity: 0, rotateY: 180, x: -300, transition: { duration: 0.6 } },
+  exitLeft: { opacity: 0, rotateY: -180, x: 300, transition: { duration: 0.6 } },
 };
 
-// Projeler bileşeni
 const Projects = () => {
   const [activeProject, setActiveProject] = useState(0);
+  const [direction, setDirection] = useState('right');
+  const [autoSlide, setAutoSlide] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 600); // Başlangıçta boyut kontrolü
+  const [isHovered, setIsHovered] = useState(false);
 
   const projectData = [
     {
-      title: 'E-Commerce and Ad Platform',
-      duration: 'May 2024 - Ongoing',
+      title: 'E-ticaret ve İlan Platformu',
+      duration: 'Haziran 2024 - Halen',
       description: [
-        'Developed a scalable logistics and advertising platform for users.',
-        'Enabled users to explore services and communicate effectively within.',
-        'Implemented features for managing favorite listings, adding and deleting.',
-        'Utilized React.js for creating dynamic, responsive UI components.',
-        'Integrated Node.js for secure backend communication and MySQL database.',
+        'Frontend kısmında React.js, MUI (Material UI), Styled-Components ve React Router ile modern bir arayüz geliştirilmiştir. MUI ile özelleştirilmiş ikonlar ve stiller kullanıldı. Framer Motion animasyonları ile interaktif tasarımlar oluşturuldu.',
+        'Backend tarafında Node.js, Express.js, Sequelize ve MySQL kullanılarak veri yönetimi ve kullanıcı kimlik doğrulama sistemleri sağlanmıştır. JWT ile güvenli giriş işlemleri oluşturulmuş, CORS ile API güvenliği artırılmıştır.',
+        'Kullanıcılar, ilan ekleme, düzenleme, silme ve favori listelerini yönetme gibi işlemleri gerçekleştirebilir. Ayrıca diğer kullanıcılarla iletişim kurarak etkileşimde bulunabilir. Responsive tasarım sayesinde tüm cihazlarla uyumludur.',
       ],
       technologies: ['React.js', 'Node.js', 'MySQL'],
     },
     {
-      title: 'Portfolio Website',
-      duration: 'Ongoing',
+      title: 'Kişisel Web Sitesi',
+      duration: 'Ekim 2024',
       description: [
-        'Built a modern platform using JavaScript and React.js technologies.',
-        'Created a portfolio showcasing my technical skills and projects.',
-        'Ensured responsive design for seamless functionality across all devices.',
-        'Designed a user-friendly interface that meets high visual standards.',
-        'Highlighted projects through an intuitive portfolio for showcasing skills.',
+        'React.js ve Material UI kullanarak geliştirilen modern bir portföy web sitesi, kullanıcıların rahatça gezinebileceği bir deneyim sunmaktadır. Kullanıcı dostu arayüz ile etkileşimli bir tasarım oluşturulmuştur.',
+        'Dinamik bir intro bileşeni ve zenginleştirilmiş proje kartları ile Framer Motion animasyonları, kullanıcı etkileşimini artırmak için tasarlanmıştır. Projeler arasında ok tuşları ile akıcı geçişler sağlanmaktadır.',
+        'Web sitesi, form gönderimleri için EmailJS entegrasyonu ile güçlendirilmiştir. Vercel üzerinde barındırılmakta ve düzenli olarak içerik güncellemeleri yapılmaktadır. Kullanıcı deneyimi sürekli olarak geliştirilmektedir.',
       ],
       technologies: ['JavaScript', 'React.js'],
     },
   ];
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (autoSlide) {
+        handleNextProject();
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [autoSlide]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 600);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleNextProject = () => {
+    setDirection('right');
     setActiveProject((prevIndex) => (prevIndex + 1) % projectData.length);
   };
 
   const handlePrevProject = () => {
+    setDirection('left');
     setActiveProject((prevIndex) => (prevIndex - 1 + projectData.length) % projectData.length);
   };
 
+  const handleCardClick = () => {
+    setAutoSlide(false);
+    handleNextProject();
+    setTimeout(() => setAutoSlide(true), 5000);
+  };
+
+  const handleCardHover = () => {
+    setIsHovered(true);
+    setAutoSlide(false);
+  };
+
+  const handleCardLeave = () => {
+    setIsHovered(false);
+    setAutoSlide(true);
+  };
+
+
+  const waveStyle = (position) => ({
+    position: 'absolute',
+    top: '35%',
+    width: '20px',
+    height: '150px',
+    backgroundColor: '#c12a8c',
+    borderRadius: '10px',
+    zIndex: 1,
+    [position]: '0',
+    transform: 'translateY(-50%)',
+    '@media (max-width: 600px)': {
+      [position]: '5%',
+      zIndex: 0,
+    },
+  });
+
   return (
     <ThemeProvider theme={theme}>
-      <Container sx={{ marginTop: 4, padding: '20px', backgroundColor: '#fff', borderRadius: '10px' }}>
-        <Typography variant="h4" component="h2" gutterBottom align="center" sx={{ fontWeight: 'bold', color: '#c12a8c' }}>
-          Projects
+      <Container
+        sx={{
+          mt: 4,
+          py: 3,
+          backgroundColor: '#fff',
+          borderRadius: '10px',
+          position: 'relative',
+          overflow: 'visible',
+          width: '100%',
+          maxWidth: '1200px',
+        }}
+      >
+        <Typography
+          variant="h4"
+          component="h2"
+          gutterBottom
+          align="center"
+          sx={{
+            fontWeight: 'bold', 
+            color: '#c12a8c', 
+            zIndex: 1,
+            position: 'relative', 
+            top: '-20px',   
+            display: 'flex',  
+            justifyContent: 'center',
+            transform: 'translateX(-25px)',
+          }}
+        >
+          Projeler
         </Typography>
-        <Grid container spacing={4} justifyContent="center">
-          <Grid item xs={12} sm={6} md={4} sx={{ position: 'relative' }}>
-            {/* Sol ok butonu */}
-            <IconButton 
-              sx={{ 
-                position: 'absolute', 
-                left: '-40px', 
-                top: '50%', 
-                transform: 'translateY(-50%)', 
-                zIndex: 2 // z-index ekle
-              }} 
-              onClick={handlePrevProject}
-            >
-              <ArrowBackIosIcon />
-            </IconButton>
+        <Grid container spacing={4} justifyContent="center" sx={{ position: 'relative' }}>
+          {/* Sol dalgalanma animasyonu */}
+          {!isMobile && (
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={waveAnimation}
+              style={waveStyle('left')}
+            />
+          )}
+
+          <Grid item xs={12} sm={8} md={6} sx={{ position: 'relative' }}>
+
+            {/* Arka plan kartı */}
+            <BackgroundCard />
 
             <motion.div
               key={activeProject}
-              initial="hidden"
+              initial={direction === 'right' ? 'hiddenRight' : 'hiddenLeft'}
               animate="visible"
-              exit="exit"
+              exit={direction === 'right' ? 'exitRight' : 'exitLeft'}
               variants={cardVariants}
               style={{ perspective: 1000 }}
             >
-              {/* Kısmi görünümlü arka proje kartı */}
-              <PartialShadowCard>
+              <StyledCard 
+              onMouseEnter={handleCardHover}
+              onMouseLeave={handleCardLeave}
+              className={isHovered ? 'hovered' : ''}
+            onClick={handleCardClick}>
                 <CardContent>
-                  <Typography variant="h6" component="h3" gutterBottom sx={{ color: '#c12a8c' }}>
-                    {projectData[1].title}
-                  </Typography>
-                  <Typography color="textSecondary" gutterBottom>
-                    {projectData[1].duration}
-                  </Typography>
-                </CardContent>
-              </PartialShadowCard>
-
-              {/* Öndeki aktif proje kartı */}
-              <StyledCard onClick={handleNextProject}> {/* Tıklama olayı ekleniyor */}
-                <CardContent>
-                  <Typography variant="h5" component="h3" gutterBottom sx={{ color: '#c12a8c' }}>
+                  <Typography variant="h5" component="div" gutterBottom sx={{ color: '#c12a8c' }}>
                     {projectData[activeProject].title}
                   </Typography>
-                  <Typography color="textSecondary" gutterBottom>
+                  <Typography variant="body2" color="text.secondary" gutterBottom>
                     {projectData[activeProject].duration}
                   </Typography>
-                  <Typography variant="body2" component="ul" paragraph>
-                    {projectData[activeProject].description.map((desc, idx) => (
-                      <li key={idx}>{desc}</li>
-                    ))}
-                  </Typography>
-                  <div>
-                    {projectData[activeProject].technologies.map((tech, idx) => (
-                      <Chip 
-                        key={idx} 
-                        label={tech} 
-                        variant="outlined" 
-                        sx={{ margin: '2px', backgroundColor: '#e8a6cd', color: '#c12a8c' }} 
-                      />
+                  {projectData[activeProject].description.map((text, index) => (
+                    <Typography key={index} variant="body2" paragraph>
+                      {text}
+                    </Typography>
+                  ))}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: '8px' }}>
+                    {projectData[activeProject].technologies.map((tech) => (
+                      <Chip key={tech} label={tech} sx={{ margin: '4px', backgroundColor: '#e8a6cd', color: '#c12a8c' }} />
                     ))}
                   </div>
                 </CardContent>
               </StyledCard>
             </motion.div>
 
-            {/* Sağ ok butonu */}
-            <IconButton 
-              sx={{ 
-                position: 'absolute', 
-                right: '-70px', 
-                top: '50%', 
-                transform: 'translateY(-50%)', 
-                zIndex: 2 // z-index ekle
-              }} 
-              onClick={handleNextProject}
-            >
-              <ArrowForwardIosIcon />
-            </IconButton>
+            <IconButton
+  sx={{
+    position: 'absolute',
+    left: { xs: '-40px', sm: '-50px', md: '-60px', lg: '-70px' }, // Her ekran boyutunda dış kenar pozisyonu artırıldı
+    top: '50%',
+    transform: 'translateY(-50%)',
+    zIndex: 3, // Butonlar her zaman önde olacak şekilde
+    padding: { xs: '6px', sm: '8px', md: '12px' }, // Ekrana göre padding
+    backgroundColor: '#ffffff',
+    borderRadius: '50%',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
+    transition: 'all 0.3s ease-in-out',
+    '&:hover': {
+      backgroundColor: '#e0e0e0',
+      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.25)',
+    },
+    '@media (min-width: 600px)': {
+      left: '-50px', // Tabletlerde daha dışta
+    },
+    '@media (min-width: 900px)': {
+      left: '-70px', // Daha geniş ekranlarda daha dışarıda
+    },
+  }}
+  onClick={() => {
+    handlePrevProject();
+    setAutoSlide(false);
+    setTimeout(() => setAutoSlide(true), 5000);
+  }}
+>
+  <ArrowBackIosIcon sx={{ color: '#c12a8c', fontSize: { xs: '16px', sm: '20px', md: '24px' } }} />
+</IconButton>
+
+<IconButton
+  sx={{
+    position: 'absolute',
+    right: { xs: '-40px', sm: '-50px', md: '-60px', lg: '-70px' }, // Her ekran boyutunda dış kenar pozisyonu artırıldı
+    top: '50%',
+    transform: 'translateY(-50%)',
+    zIndex: 3, // Butonlar her zaman önde olacak şekilde
+    padding: { xs: '6px', sm: '8px', md: '12px' }, // Ekrana göre padding
+    backgroundColor: '#ffffff',
+    borderRadius: '50%',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
+    transition: 'all 0.3s ease-in-out',
+    '&:hover': {
+      backgroundColor: '#e0e0e0',
+      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.25)',
+    },
+    '@media (min-width: 600px)': {
+      right: '-50px', // Tabletlerde daha dışta
+    },
+    '@media (min-width: 900px)': {
+      right: '-70px', // Daha geniş ekranlarda daha dışarıda
+    },
+  }}
+  onClick={() => {
+    handleNextProject();
+    setAutoSlide(false);
+    setTimeout(() => setAutoSlide(true), 5000);
+  }}
+>
+  <ArrowForwardIosIcon sx={{ color: '#c12a8c', fontSize: { xs: '16px', sm: '20px', md: '24px' } }} />
+</IconButton>
           </Grid>
+
+          {/* Sağ dalgalanma animasyonu */}
+          {!isMobile && (
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={waveAnimation}
+              style={waveStyle('right')}
+            />
+          )}
         </Grid>
       </Container>
     </ThemeProvider>
