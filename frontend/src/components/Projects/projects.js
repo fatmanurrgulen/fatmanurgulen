@@ -22,15 +22,15 @@ const StyledCard = styled(Card)(({ theme }) => ({
   width: '100%',
   maxWidth: '450px',
   '@media (max-width: 600px)': {
-    maxWidth: '90%',
+    maxWidth: '100%',  // Mobilde tam genişlik
+    padding: '10px',
   },
 }));
 
-// Stil edilmiş arka plan kartı
 const BackgroundCard = styled(Card)(({ theme }) => ({
   position: 'absolute',
   top: '54%',
-  right: '13%', 
+  right: '13%',
   width: '70%',
   height: '77%',
   backgroundColor: 'white',
@@ -39,8 +39,13 @@ const BackgroundCard = styled(Card)(({ theme }) => ({
   boxShadow: theme.shadows[2],
   opacity: 0.6,
   transform: 'translateY(-50%)',
- 
+  '@media (max-width: 600px)': {
+    width: '90%',
+    right: '5%',  // Mobilde daha ortada
+    height: 'auto',  // Yükseklik mobilde otomatik ayarlansın
+  },
 }));
+
 
 // Dalgalanma animasyonu
 const waveAnimation = {
@@ -88,9 +93,9 @@ const Projects = () => {
       title: 'E-ticaret ve İlan Platformu',
       duration: 'Haziran 2024 - Halen',
       description: [
-        'Frontend kısmında React.js, MUI (Material UI), Styled-Components ve React Router ile modern bir arayüz geliştirilmiştir. MUI ile özelleştirilmiş ikonlar ve stiller kullanıldı. Framer Motion animasyonları ile interaktif tasarımlar oluşturuldu.',
+        'Frontend kısmında React.js, MUI (Material UI), Styled-Components ve React Router ile modern bir arayüz geliştirilmiştir. MUI ile özelleştirilmiş ikonlar ve stiller kullanıldı. Framer Motion animasyonları ile kullanıcı etkileşimini artıran tasarımlar oluşturuldu.',
         'Backend tarafında Node.js, Express.js, Sequelize ve MySQL kullanılarak veri yönetimi ve kullanıcı kimlik doğrulama sistemleri sağlanmıştır. JWT ile güvenli giriş işlemleri oluşturulmuş, CORS ile API güvenliği artırılmıştır.',
-        'Kullanıcılar, ilan ekleme, düzenleme, silme ve favori listelerini yönetme gibi işlemleri gerçekleştirebilir. Ayrıca diğer kullanıcılarla iletişim kurarak etkileşimde bulunabilir. Responsive tasarım sayesinde tüm cihazlarla uyumludur.',
+        ' Kullanıcıların, ilan ekleme, düzenleme, silme ve favori listelerini yönetme gibi işlemleri gerçekleştirmesi sağlanmaktadır. Ayrıca diğer kullanıcılarla iletişim kurarak etkileşimde bulunabilir. Responsive tasarım sayesinde tüm cihazlarla uyumludur.',
       ],
       technologies: ['React.js', 'Node.js', 'MySQL'],
     },
@@ -98,8 +103,8 @@ const Projects = () => {
       title: 'Kişisel Web Sitesi',
       duration: 'Ekim 2024',
       description: [
-        'React.js ve Material UI kullanarak geliştirilen modern bir portföy web sitesi, kullanıcıların rahatça gezinebileceği bir deneyim sunmaktadır. Kullanıcı dostu arayüz ile etkileşimli bir tasarım oluşturulmuştur.',
-        'Dinamik bir intro bileşeni ve zenginleştirilmiş proje kartları ile Framer Motion animasyonları, kullanıcı etkileşimini artırmak için tasarlanmıştır. Projeler arasında ok tuşları ile akıcı geçişler sağlanmaktadır.',
+        'React.js ve Material UI kullanarak geliştirilen modern bir portföy web sitesi, kullanıcıların rahatça gezinebileceği bir deneyim sunmaktadır. Kullanıcı dostu arayüz ile etkileşimli bir tasarım oluşturulmuştur. Web sitesi, kullanıcıların ihtiyaçlarına göre çeşitli özellikler sunmaktadır.',
+        'Dinamik bir intro bileşeni ve zenginleştirilmiş proje kartları ile Framer Motion animasyonları, kullanıcı etkileşimini artırmak için tasarlanmıştır. Projeler arasında ok tuşları ile akıcı geçişler sağlanmaktadır. Kullanıcılar, projeleri kolayca inceleyip keşfedebilmektedir.',
         'Web sitesi, form gönderimleri için EmailJS entegrasyonu ile güçlendirilmiştir. Vercel üzerinde barındırılmakta ve düzenli olarak içerik güncellemeleri yapılmaktadır. Kullanıcı deneyimi sürekli olarak geliştirilmektedir.',
       ],
       technologies: ['JavaScript', 'React.js'],
@@ -163,8 +168,7 @@ const Projects = () => {
     [position]: '0',
     transform: 'translateY(-50%)',
     '@media (max-width: 600px)': {
-      [position]: '5%',
-      zIndex: 0,
+      display: 'none',  // Mobilde gizleyelim
     },
   });
 
@@ -253,24 +257,22 @@ const Projects = () => {
             <IconButton
   sx={{
     position: 'absolute',
-    left: { xs: '-40px', sm: '-50px', md: '-60px', lg: '-70px' }, // Her ekran boyutunda dış kenar pozisyonu artırıldı
+    left: { xs: '-40px', sm: '-50px', md: '-60px', lg: '-70px' },
     top: '50%',
     transform: 'translateY(-50%)',
-    zIndex: 3, // Butonlar her zaman önde olacak şekilde
-    padding: { xs: '6px', sm: '8px', md: '12px' }, // Ekrana göre padding
+    zIndex: 3,
+    width: '40px', // Genişlik
+    height: '40px', // Yükseklik
     backgroundColor: '#ffffff',
-    borderRadius: '50%',
+    borderRadius: '50%', // Yuvarlak yapar
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
     transition: 'all 0.3s ease-in-out',
+    display: { xs: 'none', sm: 'flex' }, // Flexbox kullanarak simgeyi ortalıyoruz
+    alignItems: 'center', // Dikey ortalama
+    justifyContent: 'center', // Yatay ortalama
     '&:hover': {
       backgroundColor: '#e0e0e0',
       boxShadow: '0 6px 12px rgba(0, 0, 0, 0.25)',
-    },
-    '@media (min-width: 600px)': {
-      left: '-50px', // Tabletlerde daha dışta
-    },
-    '@media (min-width: 900px)': {
-      left: '-70px', // Daha geniş ekranlarda daha dışarıda
     },
   }}
   onClick={() => {
@@ -285,24 +287,22 @@ const Projects = () => {
 <IconButton
   sx={{
     position: 'absolute',
-    right: { xs: '-40px', sm: '-50px', md: '-60px', lg: '-70px' }, // Her ekran boyutunda dış kenar pozisyonu artırıldı
+    right: { xs: '-40px', sm: '-50px', md: '-60px', lg: '-70px' },
     top: '50%',
     transform: 'translateY(-50%)',
-    zIndex: 3, // Butonlar her zaman önde olacak şekilde
-    padding: { xs: '6px', sm: '8px', md: '12px' }, // Ekrana göre padding
+    zIndex: 3,
+    width: '40px',
+    height: '40px',
     backgroundColor: '#ffffff',
     borderRadius: '50%',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
     transition: 'all 0.3s ease-in-out',
+    display: { xs: 'none', sm: 'flex' },
+    alignItems: 'center',
+    justifyContent: 'center',
     '&:hover': {
       backgroundColor: '#e0e0e0',
       boxShadow: '0 6px 12px rgba(0, 0, 0, 0.25)',
-    },
-    '@media (min-width: 600px)': {
-      right: '-50px', // Tabletlerde daha dışta
-    },
-    '@media (min-width: 900px)': {
-      right: '-70px', // Daha geniş ekranlarda daha dışarıda
     },
   }}
   onClick={() => {
@@ -313,6 +313,8 @@ const Projects = () => {
 >
   <ArrowForwardIosIcon sx={{ color: '#c12a8c', fontSize: { xs: '16px', sm: '20px', md: '24px' } }} />
 </IconButton>
+
+
           </Grid>
 
           {/* Sağ dalgalanma animasyonu */}
