@@ -1,23 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react'; 
 import './navbar.css';
 import logo from '../../assets/logo.png';
 import menu from '../../assets/menu.png';
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef(null);
+  const menuButtonRef = useRef(null);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const scrollToContact = () => {
-    document.getElementById('contact').scrollIntoView({
-      behavior: 'smooth'
-    });
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
   };
+
+  const scrollToProjects = () => {
+    document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleClickOutside = (event) => {
+    if (showMenu && menuRef.current && !menuRef.current.contains(event.target) &&
+        menuButtonRef.current && !menuButtonRef.current.contains(event.target)) {
+      setShowMenu(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showMenu]);
 
   return (
     <nav className="navbar">
@@ -29,12 +44,12 @@ const Navbar = () => {
         onClick={scrollToTop} 
       />
 
-      {/* Desktop Menu Button */}
+      {/* Desktop Menu Buttons */}
       <button 
         className="desktopMenuBtn" 
         onClick={scrollToContact}
       >
-        Contact Me
+        İletişim
       </button>
 
       {/* Mobile Menu Icon */}
@@ -42,26 +57,35 @@ const Navbar = () => {
         src={menu} 
         alt="Menu" 
         className="mobMenu" 
-        onClick={() => setShowMenu(!showMenu)} 
+        onClick={() => setShowMenu(prev => !prev)} 
+        ref={menuButtonRef}
       />
 
       {/* Dropdown Menu for Mobile */}
-      <div 
-        className="navMenu" 
-        style={{ display: showMenu ? 'flex' : 'none' }}
-      >
-        <button 
-          className="mobileMenuBtn" 
-          onClick={() => {
-            scrollToContact();
-            setShowMenu(false); // Menü kapansın
-          }}
-        >
-          Contact Me
-        </button>
-      </div>
+      {showMenu && (
+        <div className="navMenu" ref={menuRef}>
+          <button 
+            className="mobileMenuBtn" 
+            onClick={() => {
+              scrollToProjects();
+              setShowMenu(false); // Close the menu
+            }}
+          >
+            Projeler
+          </button>
+          <button 
+            className="mobileMenuBtn" 
+            onClick={() => {
+              scrollToContact();
+              setShowMenu(false); // Close the menu
+            }}
+          >
+            İletişim
+          </button>
+        </div>
+      )}
     </nav>
   );
-}
+};
 
 export default Navbar;
