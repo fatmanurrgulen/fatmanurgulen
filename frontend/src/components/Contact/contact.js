@@ -133,7 +133,7 @@ const Contact = () => {
             </Box>
 
             {/* Contact Section */}
-            <div ref={contactSection}>
+            <div ref={contactSection} id="contact">
                 <Paper elevation={3} sx={{ padding: 4, borderRadius: 4, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)" }}>
                     <Typography variant="h4" component="h1" gutterBottom textAlign="center">
                         İletişim

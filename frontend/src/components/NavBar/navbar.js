@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'; 
+import React, { useState, useEffect, useRef } from 'react';
 import './navbar.css';
 import logo from '../../assets/logo.png';
 import menu from '../../assets/menu.png';
@@ -8,8 +8,13 @@ const Navbar = () => {
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
 
+  // Scroll functions
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollToIntro = () => {
+    document.getElementById('intro').scrollIntoView({ behavior: 'smooth' });
   };
 
   const scrollToContact = () => {
@@ -21,8 +26,13 @@ const Navbar = () => {
   };
 
   const handleClickOutside = (event) => {
-    if (showMenu && menuRef.current && !menuRef.current.contains(event.target) &&
-        menuButtonRef.current && !menuButtonRef.current.contains(event.target)) {
+    if (
+      showMenu &&
+      menuRef.current &&
+      !menuRef.current.contains(event.target) &&
+      menuButtonRef.current &&
+      !menuButtonRef.current.contains(event.target)
+    ) {
       setShowMenu(false);
     }
   };
@@ -37,35 +47,36 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       {/* Logo */}
-      <img 
-        src={logo} 
-        alt="Logo" 
-        className="logo" 
-        onClick={scrollToTop} 
-      />
+      <img src={logo} alt="Logo" className="logo" onClick={scrollToTop} />
 
       {/* Desktop Menu Buttons */}
-      <button 
-        className="desktopMenuBtn" 
-        onClick={scrollToContact}
-      >
+      <button className="desktopMenuBtn" onClick={scrollToContact}>
         İletişim
       </button>
 
       {/* Mobile Menu Icon */}
-      <img 
-        src={menu} 
-        alt="Menu" 
-        className="mobMenu" 
-        onClick={() => setShowMenu(prev => !prev)} 
+      <img
+        src={menu}
+        alt="Menu"
+        className="mobMenu"
+        onClick={() => setShowMenu((prev) => !prev)}
         ref={menuButtonRef}
       />
 
       {/* Dropdown Menu for Mobile */}
       {showMenu && (
         <div className="navMenu" ref={menuRef}>
-          <button 
-            className="mobileMenuBtn" 
+          <button
+            className="mobileMenuBtn"
+            onClick={() => {
+              scrollToIntro();
+              setShowMenu(false); // Close the menu
+            }}
+          >
+            Tanıtım
+          </button>
+          <button
+            className="mobileMenuBtn"
             onClick={() => {
               scrollToProjects();
               setShowMenu(false); // Close the menu
@@ -73,8 +84,8 @@ const Navbar = () => {
           >
             Projeler
           </button>
-          <button 
-            className="mobileMenuBtn" 
+          <button
+            className="mobileMenuBtn"
             onClick={() => {
               scrollToContact();
               setShowMenu(false); // Close the menu

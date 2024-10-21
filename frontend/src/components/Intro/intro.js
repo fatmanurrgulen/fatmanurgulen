@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import { Typewriter } from 'react-simple-typewriter';
 import { FaDownload, FaGithub } from 'react-icons/fa';
 import './intro.css';
@@ -8,7 +8,8 @@ const Intro = () => {
   return (
     <section id="intro" className="intro-section">
       <div className="intro-content">
-        <h1 className="intro-heading">
+        {/* Selamlar kısmı için ayrı id */}
+        <h1 id="selamlar" className="intro-heading">
           Selamlar, <br />
           Ben <span className="intro-name">
             <Typewriter
