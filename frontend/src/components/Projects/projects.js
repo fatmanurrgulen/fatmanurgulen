@@ -188,23 +188,28 @@ const Projects = () => {
         }}
       >
         <Typography
-          variant="h4"
-          component="h2"
-          gutterBottom
-          align="center"
-          sx={{
-            fontWeight: 'bold', 
-            color: '#c12a8c', 
-            zIndex: 1,
-            position: 'relative', 
-            top: '-20px',   
-            display: 'flex',  
-            justifyContent: 'center',
-            transform: 'translateX(-25px)',
-          }}
-        >
-          Projeler
-        </Typography>
+  variant="h4"
+  component="h2"
+  gutterBottom
+  align="center"
+  sx={{
+    fontWeight: 'bold', 
+    color: '#c12a8c', 
+    zIndex: 1,
+    position: 'relative', 
+    top: '-20px',   
+    display: 'flex',  
+    justifyContent: 'center',
+    transform: 'translateX(-25px)',
+    '@media (max-width: 600px)': {
+      justifyContent: 'center',
+      transform: 'translateX(0)', // Mobilde ortalamak için sıfırlıyoruz
+    },
+  }}
+>
+  Projeler
+</Typography>
+
         <Grid container spacing={4} justifyContent="center" sx={{ position: 'relative' }}>
           {/* Sol dalgalanma animasyonu */}
           {!isMobile && (
