@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';     
+import React, { useState, useEffect } from 'react';
 import { Container, Typography, Grid, Card, CardContent, Chip, IconButton } from '@mui/material';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
@@ -7,7 +7,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const theme = createTheme();
 
-// Stil edilmiş ana kart
+// Styled Components
 const StyledCard = styled(Card)(({ theme }) => ({
   transition: 'transform 0.3s, box-shadow 0.3s',
   borderRadius: '10px',
@@ -21,9 +21,9 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
   width: '100%',
   maxWidth: '450px',
+  padding: '10px', // Added padding for consistency across breakpoints
   '@media (max-width: 600px)': {
-    maxWidth: '100%',  // Mobilde tam genişlik
-    padding: '10px',
+    maxWidth: '100%',
   },
 }));
 
@@ -41,13 +41,12 @@ const BackgroundCard = styled(Card)(({ theme }) => ({
   transform: 'translateY(-50%)',
   '@media (max-width: 600px)': {
     width: '90%',
-    right: '5%',  // Mobilde daha ortada
-    height: 'auto',  // Yükseklik mobilde otomatik ayarlansın
+    right: '5%',
+    height: 'auto', // Responsive height adjustment
   },
 }));
 
-
-// Dalgalanma animasyonu
+// Wave Animation
 const waveAnimation = {
   hidden: { x: 0, opacity: 0 },
   visible: {
@@ -62,7 +61,7 @@ const waveAnimation = {
   },
 };
 
-// Kart animasyonları
+// Card Animation
 const cardVariants = {
   hiddenRight: { opacity: 0, rotateY: 180, x: 300 },
   hiddenLeft: { opacity: 0, rotateY: -180, x: -300 },
@@ -85,7 +84,7 @@ const Projects = () => {
   const [activeProject, setActiveProject] = useState(0);
   const [direction, setDirection] = useState('right');
   const [autoSlide, setAutoSlide] = useState(true);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 600); // Başlangıçta boyut kontrolü
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 600); 
   const [isHovered, setIsHovered] = useState(false);
 
   const projectData = [
@@ -156,7 +155,6 @@ const Projects = () => {
     setAutoSlide(true);
   };
 
-
   const waveStyle = (position) => ({
     position: 'absolute',
     top: '35%',
@@ -168,14 +166,14 @@ const Projects = () => {
     [position]: '0',
     transform: 'translateY(-50%)',
     '@media (max-width: 600px)': {
-      display: 'none',  // Mobilde gizleyelim
+      display: 'none', // Hidden on mobile
     },
   });
 
   return (
     <ThemeProvider theme={theme}>
       <Container
-      id="projects" 
+        id="projects"
         sx={{
           mt: 4,
           py: 3,
@@ -188,30 +186,29 @@ const Projects = () => {
         }}
       >
         <Typography
-  variant="h4"
-  component="h2"
-  gutterBottom
-  align="center"
-  sx={{
-    fontWeight: 'bold', 
-    color: '#c12a8c', 
-    zIndex: 1,
-    position: 'relative', 
-    top: '-20px',   
-    display: 'flex',  
-    justifyContent: 'center',
-    transform: 'translateX(-25px)',
-    '@media (max-width: 600px)': {
-      justifyContent: 'center',
-      transform: 'translateX(0)', // Mobilde ortalamak için sıfırlıyoruz
-    },
-  }}
->
-  Projeler
-</Typography>
+          variant="h4"
+          component="h2"
+          gutterBottom
+          align="center"
+          sx={{
+            fontWeight: 'bold',
+            color: '#c12a8c',
+            zIndex: 1,
+            position: 'relative',
+            top: '-20px',
+            display: 'flex',
+            justifyContent: 'center',
+            transform: 'translateX(-25px)',
+            '@media (max-width: 600px)': {
+              justifyContent: 'center',
+              transform: 'translateX(0)', 
+            },
+          }}
+        >
+          Projeler
+        </Typography>
 
         <Grid container spacing={4} justifyContent="center" sx={{ position: 'relative' }}>
-          {/* Sol dalgalanma animasyonu */}
           {!isMobile && (
             <motion.div
               initial="hidden"
@@ -222,8 +219,6 @@ const Projects = () => {
           )}
 
           <Grid item xs={12} sm={8} md={6} sx={{ position: 'relative' }}>
-
-            {/* Arka plan kartı */}
             <BackgroundCard />
 
             <motion.div
@@ -234,11 +229,12 @@ const Projects = () => {
               variants={cardVariants}
               style={{ perspective: 1000 }}
             >
-              <StyledCard 
-              onMouseEnter={handleCardHover}
-              onMouseLeave={handleCardLeave}
-              className={isHovered ? 'hovered' : ''}
-            onClick={handleCardClick}>
+              <StyledCard
+                onMouseEnter={handleCardHover}
+                onMouseLeave={handleCardLeave}
+                className={isHovered ? 'hovered' : ''}
+                onClick={handleCardClick}
+              >
                 <CardContent>
                   <Typography variant="h5" component="div" gutterBottom sx={{ color: '#c12a8c' }}>
                     {projectData[activeProject].title}
@@ -253,7 +249,11 @@ const Projects = () => {
                   ))}
                   <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: '8px' }}>
                     {projectData[activeProject].technologies.map((tech) => (
-                      <Chip key={tech} label={tech} sx={{ margin: '4px', backgroundColor: '#e8a6cd', color: '#c12a8c' }} />
+                      <Chip
+                        key={tech}
+                        label={tech}
+                        sx={{ margin: '4px', backgroundColor: '#e8a6cd', color: '#c12a8c' }}
+                      />
                     ))}
                   </div>
                 </CardContent>
@@ -261,69 +261,66 @@ const Projects = () => {
             </motion.div>
 
             <IconButton
-  sx={{
-    position: 'absolute',
-    left: { xs: '-40px', sm: '-50px', md: '-60px', lg: '-70px' },
-    top: '50%',
-    transform: 'translateY(-50%)',
-    zIndex: 3,
-    width: '40px', // Genişlik
-    height: '40px', // Yükseklik
-    backgroundColor: '#ffffff',
-    borderRadius: '50%', // Yuvarlak yapar
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
-    transition: 'all 0.3s ease-in-out',
-    display: { xs: 'none', sm: 'flex' }, // Flexbox kullanarak simgeyi ortalıyoruz
-    alignItems: 'center', // Dikey ortalama
-    justifyContent: 'center', // Yatay ortalama
-    '&:hover': {
-      backgroundColor: '#e0e0e0',
-      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.25)',
-    },
-  }}
-  onClick={() => {
-    handlePrevProject();
-    setAutoSlide(false);
-    setTimeout(() => setAutoSlide(true), 5000);
-  }}
->
-  <ArrowBackIosIcon sx={{ color: '#c12a8c', fontSize: { xs: '16px', sm: '20px', md: '24px' } }} />
-</IconButton>
+              sx={{
+                position: 'absolute',
+                left: { xs: '-40px', sm: '-50px', md: '-60px', lg: '-70px' },
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 3,
+                width: '40px',
+                height: '40px',
+                backgroundColor: '#ffffff',
+                borderRadius: '50%',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
+                transition: 'all 0.3s ease-in-out',
+                display: { xs: 'none', sm: 'flex' },
+                alignItems: 'center',
+                justifyContent: 'center',
+                '&:hover': {
+                  backgroundColor: '#e0e0e0',
+                  boxShadow: '0 6px 12px rgba(0, 0, 0, 0.25)',
+                },
+              }}
+              onClick={() => {
+                handlePrevProject();
+                setAutoSlide(false);
+                setTimeout(() => setAutoSlide(true), 5000);
+              }}
+            >
+              <ArrowBackIosIcon sx={{ color: '#c12a8c', fontSize: { xs: '16px', sm: '20px', md: '24px' } }} />
+            </IconButton>
 
-<IconButton
-  sx={{
-    position: 'absolute',
-    right: { xs: '-40px', sm: '-50px', md: '-60px', lg: '-70px' },
-    top: '50%',
-    transform: 'translateY(-50%)',
-    zIndex: 3,
-    width: '40px',
-    height: '40px',
-    backgroundColor: '#ffffff',
-    borderRadius: '50%',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
-    transition: 'all 0.3s ease-in-out',
-    display: { xs: 'none', sm: 'flex' },
-    alignItems: 'center',
-    justifyContent: 'center',
-    '&:hover': {
-      backgroundColor: '#e0e0e0',
-      boxShadow: '0 6px 12px rgba(0, 0, 0, 0.25)',
-    },
-  }}
-  onClick={() => {
-    handleNextProject();
-    setAutoSlide(false);
-    setTimeout(() => setAutoSlide(true), 5000);
-  }}
->
-  <ArrowForwardIosIcon sx={{ color: '#c12a8c', fontSize: { xs: '16px', sm: '20px', md: '24px' } }} />
-</IconButton>
-
-
+            <IconButton
+              sx={{
+                position: 'absolute',
+                right: { xs: '-40px', sm: '-50px', md: '-60px', lg: '-70px' },
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 3,
+                width: '40px',
+                height: '40px',
+                backgroundColor: '#ffffff',
+                borderRadius: '50%',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
+                transition: 'all 0.3s ease-in-out',
+                display: { xs: 'none', sm: 'flex' },
+                alignItems: 'center',
+                justifyContent: 'center',
+                '&:hover': {
+                  backgroundColor: '#e0e0e0',
+                  boxShadow: '0 6px 12px rgba(0, 0, 0, 0.25)',
+                },
+              }}
+              onClick={() => {
+                handleNextProject();
+                setAutoSlide(false);
+                setTimeout(() => setAutoSlide(true), 5000);
+              }}
+            >
+              <ArrowForwardIosIcon sx={{ color: '#c12a8c', fontSize: { xs: '16px', sm: '20px', md: '24px' } }} />
+            </IconButton>
           </Grid>
 
-          {/* Sağ dalgalanma animasyonu */}
           {!isMobile && (
             <motion.div
               initial="hidden"

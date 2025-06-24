@@ -1,108 +1,57 @@
-html {
-  scroll-behavior: smooth;
-}
-/* Genel ayarlar */ 
+/* Ana alan */
 #intro {
-  min-height: 100vh;
-  width: 100%;
-  max-width: 85rem;
-  margin: 0 auto;
-  overflow: hidden;
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  box-sizing: border-box;
-  margin-top: -1rem;
-  transition: all 0.8s ease; /* Daha yumuşak bir geçiş */
-}
-
-/* İçerik ayarları */
-.intro-content {
-  flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  margin-left: -1rem;
-  transition: margin 0.8s ease, transform 0.5s ease; /* Transform eklendi */
+  padding: 6vh 1.5rem;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Büyük ekranlarda yatay hizalama */
+@media (min-width: 900px) {
+  #intro {
+    flex-direction: row;
+    padding: 8vh 2rem;
+  }
+}
+
+/* Sol içerik */
+.intro-content {
+  flex: 1;
   text-align: center;
-  animation: fadeInUp 1s ease both; /* Yukarıdan gelen yumuşak bir giriş animasyonu */
 }
 
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Başlık */
 .intro-heading {
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-size: clamp(1.8rem, 2.5vw, 2.8rem);
+  color: #e052b2;
   font-weight: bold;
-  color: #e8a6cd;
-  animation: slideInLeft 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;}
-
-@keyframes slideInLeft {
-  0% {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  margin-bottom: 1rem;
 }
 
 .intro-name {
   color: #c12a8c;
-  display: inline-block;
-  white-space: nowrap;
-  position: relative;
-  animation: bounceIn 1.5s ease both; /* Bounce efektiyle giriş */
 }
 
-@keyframes bounceIn {
-  0%, 20%, 40%, 60%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-30px);
-  }
-  60% {
-    transform: translateY(-15px);
-  }
-}
-
+/* Açıklama */
 .intro-description {
   font-size: 1rem;
-  color: #666;
-  margin: 1rem 0;
+  color: #444;
   max-width: 40rem;
-  animation: fadeIn 1.2s ease both; /* İçeriğin ortaya çıkışı */
+  margin: 0 auto 1.5rem;
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-/* Buton grubu ve hover animasyonları */
+/* Buton grubu */
 .btn-group {
   display: flex;
   gap: 1rem;
-  margin-top: 1rem;
-  z-index: 2;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -110,236 +59,58 @@ html {
   background-color: #c12a8c;
   color: #fff;
   padding: 0.7rem 1.5rem;
-  font-size: 1.2rem;
-  border-radius: 2rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  text-decoration: none;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  text-decoration: none;
-  transition: background-color 0.4s ease, transform 0.4s ease; /* Daha yumuşak bir geçiş */
-  white-space: nowrap;
-  justify-content: center;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Hafif gölge efekti */
-  min-width: auto;
+  transition: all 0.3s ease;
 }
 
 .btn:hover {
   background-color: #e09bc1;
-  transform: scale(1.05) translateY(-5px); /* Hover durumunda yükselme ve büyüme efekti */
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3); /* Daha belirgin bir gölge */
-  
-}
-.btn:active {
-  transform: scale(0.95) translateY(0);
-  box-shadow: none; /* Tıklama durumunda gölge kaybolabilir */
+  transform: translateY(-3px);
 }
 
-
-/* Görsel ayarları */
+/* Görsel */
 .intro-bg-wrapper {
   flex: 1;
   display: flex;
   justify-content: center;
-  margin-right: -2rem;
-  z-index: 1;
-  transition: margin-right 0.5s ease;
+  align-items: center;
 }
 
 .intro-bg {
-  width: 22rem;
-  height: 22rem;
-  background-color: #f7df1e;
-  border-radius: 50%;
+  width: 16rem;
+  height: 16rem;
   object-fit: cover;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
-  transition: transform 0.8s ease-in-out, box-shadow 0.8s ease-in-out;
-  animation: floating 3s ease-in-out infinite; /* Hafif yukarı-aşağı hareket eden görsel */
+  border-radius: 50%;
+  background-color: #f7df1e;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes floating {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-/* Responsive ayarlar */
-/* 1440px ve yukarısı */
-@media (min-width: 1440px) {
-  #intro {
-    padding: 3rem;
-  }
-
-  .intro-heading {
-    font-size: clamp(2.5rem, 3vw, 3.5rem);
-  }
-
-  .intro-bg {
-    width: 22rem;
-    height: 22rem;
-  }
-}
-
-/* 1024px - 1440px arası */
-@media (min-width: 1024px) and (max-width: 1440px) {
-  #intro {
-    grid-template-columns: 1fr 1fr;
-    padding: 2rem;
-  }
-
-  .intro-content {
-    text-align: center;
-    margin: 0;
-  }
-
-  .intro-heading {
-    font-size: clamp(1.8rem, 3vw, 2.5rem);
-  }
-
-  .intro-bg-wrapper {
-    margin-top: 2rem;
-    justify-content: center;
-  }
-
-  .intro-bg {
-    width: 18rem;
-    height: 18rem;
-  }
-}
-
-/* 800px - 1024px arası */
-@media (min-width: 800px) and (max-width: 1024px) { 
-  #intro {
-    padding: 2rem;
-  }
-
-  .intro-heading {
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-  }
-
-  .intro-content {
-    text-align: center;
-    margin: 0;
-  }
-
-  .btn {
-    font-size: 1.1rem;
-    padding: 0.6rem 1.2rem;
-  }
-
-  .intro-bg {
-    width: 17rem;
-    height: 17rem;
-  }
-}
-
-/* 600px - 800px arası */
-@media (min-width: 600px) and (max-width: 800px) { 
-  #intro {
-    padding: 1.8rem;
-  }
-
-  .intro-heading {
-    font-size: clamp(1.5rem, 3vw, 2.1rem);
-  }
-
-  .intro-content {
-    text-align: center;
-    margin: 0;
-  }
-  .btn-group {
-    display: flex; /* Butonları yan yana yerleştirmek için flex kullan */
-    justify-content: center; /* Butonları ortala */
-    gap: 1rem; /* Butonlar arasındaki boşluğu ayarla */
-  }
-  .btn {
-    font-size: 1.05rem;
-    padding: 0.55rem 1.15rem;
-  }
-
-  .intro-bg {
-    width: 16.5rem;
-    height: 16.5rem;
-  }
-}
-
-/* 400px - 600px arası */
-@media (min-width: 400px) and (max-width: 600px) { 
-  #intro {
-    padding: 1.5rem;
-  }
-
-  .intro-heading {
-    font-size: clamp(1.4rem, 3vw, 2rem);
-  }
-  
-  .intro-content {
-    text-align: center;
-    margin: 0;
-  }
-
-  .btn {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-  }
-
-  .intro-bg {
-    width: 16rem;
-    height: 16rem;
-    margin-top: -4rem;
-  }
-}
-
-/* 0px - 400px arası */
-@media (max-width: 400px) { 
-  #intro {
-    padding: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* İçeriği yatay olarak ortalar */
-  }
-
-  .intro-heading {
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-  }
-
-  .intro-content {
-    text-align: center;
-    margin: 0;
-  }
-
-  .btn {
-    font-size: 0.9rem;
-    padding: 0.4rem 0.8rem;
-    margin-bottom: 2rem;
-  }
-
-  .intro-bg-wrapper {
-    display: flex;
-    justify-content: center; /* Yatayda ortalar */
-    align-items: center; /* Dikeyde ortalar */
-    width: 100%;
-    margin: 0 auto; /* Ortalanmış yapar */
-  }
-
+/* Responsive görsel */
+@media (max-width: 900px) {
   .intro-bg {
     width: 14rem;
     height: 14rem;
   }
 }
-@media (max-width: 350px) {
+
+@media (max-width: 600px) {
   .intro-heading {
-    font-size: clamp(1rem, 3vw, 1.5rem); /* Daha küçük ekranlarda daha ufak başlık */
+    font-size: 1.8rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
   }
 
   .intro-bg {
     width: 12rem;
-    height: 12rem; /* Daha küçük ekranlar için görsel boyutu azaltıldı */
+    height: 12rem;
   }
 }
 
@@ -349,8 +120,9 @@ html {
   background-color: #e09bc1;
   border-radius: 50%;
   pointer-events: none;
-  animation: rise 5s infinite;
+  animation: rise 5s infinite ease-in-out;
   z-index: -1;
+  opacity: 0.5;
 }
 
 @keyframes rise {
@@ -364,6 +136,7 @@ html {
   }
 }
 
+/* Baloncukların konumları */
 .bubble-1 { width: 20px; height: 20px; top: 30%; left: 10%; animation-delay: 0s; }
 .bubble-2 { width: 30px; height: 30px; top: 50%; left: 25%; animation-delay: 1s; }
 .bubble-3 { width: 25px; height: 25px; top: 70%; left: 40%; animation-delay: 2s; }

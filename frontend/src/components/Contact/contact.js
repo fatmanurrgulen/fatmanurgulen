@@ -60,81 +60,79 @@ const Contact = () => {
         <Container maxWidth="md" sx={{ mt: 3 }}>
             {/* Tools Section */}
             <Box textAlign="center" mb={8}>
-                <Typography variant="h4" component="h1" gutterBottom>
-                    Tools I Use
-                </Typography>
-                <Grid container spacing={4} justifyContent="center">
-                    <Grid item>
-                        <FaJsSquare
-                            size={50}
-                            style={{
-                                color: "#F7DF1E",
-                                transform: rotateIcons.js ? 'rotate(360deg)' : 'rotate(0deg)',
-                                transition: 'transform 0.5s ease',
-                                cursor: 'pointer'
-                            }}
-                            onMouseEnter={() => handleMouseEnter('js')}
-                            onMouseLeave={() => handleMouseLeave('js')}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <FaReact
-                            size={50}
-                            style={{
-                                color: "#61DAFB",
-                                transform: rotateIcons.react ? 'rotate(360deg)' : 'rotate(0deg)',
-                                transition: 'transform 0.5s ease',
-                                cursor: 'pointer'
-                            }}
-                            onMouseEnter={() => handleMouseEnter('react')}
-                            onMouseLeave={() => handleMouseLeave('react')}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <FaNodeJs
-                            size={50}
-                            style={{
-                                color: "#339933",
-                                transform: rotateIcons.node ? 'rotate(360deg)' : 'rotate(0deg)',
-                                transition: 'transform 0.5s ease',
-                                cursor: 'pointer'
-                            }}
-                            onMouseEnter={() => handleMouseEnter('node')}
-                            onMouseLeave={() => handleMouseLeave('node')}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <FaTypo3
-                            size={50}
-                            style={{
-                                color: "#FF8700",
-                                transform: rotateIcons.typo ? 'rotate(360deg)' : 'rotate(0deg)',
-                                transition: 'transform 0.5s ease',
-                                cursor: 'pointer'
-                            }}
-                            onMouseEnter={() => handleMouseEnter('typo')}
-                            onMouseLeave={() => handleMouseLeave('typo')}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <FaDatabase
-                            size={50}
-                            style={{
-                                color: "#00648B",
-                                transform: rotateIcons.db ? 'rotate(360deg)' : 'rotate(0deg)',
-                                transition: 'transform 0.5s ease',
-                                cursor: 'pointer'
-                            }}
-                            onMouseEnter={() => handleMouseEnter('db')}
-                            onMouseLeave={() => handleMouseLeave('db')}
-                        />
-                    </Grid>
-                </Grid>
+            <Grid container spacing={4} justifyContent="center" sx={{ mt: 4, mb: 4 }}>
+    <Grid item>
+        <FaJsSquare
+            size={50}
+            style={{
+                color: "#F7DF1E",
+                transform: rotateIcons.js ? 'rotate(360deg)' : 'rotate(0deg)',
+                transition: 'transform 0.5s ease',
+                cursor: 'pointer',
+            }}
+            onMouseEnter={() => handleMouseEnter('js')}
+            onMouseLeave={() => handleMouseLeave('js')}
+        />
+    </Grid>
+    <Grid item>
+        <FaReact
+            size={50}
+            style={{
+                color: "#61DAFB",
+                transform: rotateIcons.react ? 'rotate(360deg)' : 'rotate(0deg)',
+                transition: 'transform 0.5s ease',
+                cursor: 'pointer',
+            }}
+            onMouseEnter={() => handleMouseEnter('react')}
+            onMouseLeave={() => handleMouseLeave('react')}
+        />
+    </Grid>
+    <Grid item>
+        <FaNodeJs
+            size={50}
+            style={{
+                color: "#339933",
+                transform: rotateIcons.node ? 'rotate(360deg)' : 'rotate(0deg)',
+                transition: 'transform 0.5s ease',
+                cursor: 'pointer',
+            }}
+            onMouseEnter={() => handleMouseEnter('node')}
+            onMouseLeave={() => handleMouseLeave('node')}
+        />
+    </Grid>
+    <Grid item>
+        <FaTypo3
+            size={50}
+            style={{
+                color: "#FF8700",
+                transform: rotateIcons.typo ? 'rotate(360deg)' : 'rotate(0deg)',
+                transition: 'transform 0.5s ease',
+                cursor: 'pointer',
+            }}
+            onMouseEnter={() => handleMouseEnter('typo')}
+            onMouseLeave={() => handleMouseLeave('typo')}
+        />
+    </Grid>
+    <Grid item>
+        <FaDatabase
+            size={50}
+            style={{
+                color: "#00648B",
+                transform: rotateIcons.db ? 'rotate(360deg)' : 'rotate(0deg)',
+                transition: 'transform 0.5s ease',
+                cursor: 'pointer',
+            }}
+            onMouseEnter={() => handleMouseEnter('db')}
+            onMouseLeave={() => handleMouseLeave('db')}
+        />
+    </Grid>
+</Grid>
+
             </Box>
 
             {/* Contact Section */}
             <div ref={contactSection} id="contact">
-                <Paper elevation={3} sx={{ padding: 4, borderRadius: 4, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)" }}>
+                <Paper elevation={3} sx={{ padding: 4, borderRadius: 4, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)", mb: 4 }}>
                     <Typography variant="h4" component="h1" gutterBottom textAlign="center">
                         İletişim
                     </Typography>
