@@ -9,20 +9,8 @@ const Navbar = () => {
   const menuButtonRef = useRef(null);
 
   // Scroll functions
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const scrollToIntro = () => {
-    document.getElementById('intro').scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const scrollToContact = () => {
-    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const scrollToProjects = () => {
-    document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+  const scrollToSection = (id) => {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleClickOutside = (event) => {
@@ -47,12 +35,12 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       {/* Logo */}
-      <img src={logo} alt="Logo" className="logo" onClick={scrollToTop} />
+      <img src={logo} alt="Logo" className="logo" onClick={() => scrollToSection('top')} />
 
       {/* Desktop Menu Buttons */}
-      <button className="desktopMenuBtn" onClick={scrollToContact}>
-        İletişim
-      </button>
+      <div className="desktop-menu">
+        <button className="desktopMenuBtn" onClick={() => scrollToSection('contact')}>İletişim</button>
+      </div>
 
       {/* Mobile Menu Icon */}
       <img
@@ -66,31 +54,13 @@ const Navbar = () => {
       {/* Dropdown Menu for Mobile */}
       {showMenu && (
         <div className="navMenu" ref={menuRef}>
-          <button
-            className="mobileMenuBtn"
-            onClick={() => {
-              scrollToIntro();
-              setShowMenu(false); // Close the menu
-            }}
-          >
+          <button className="mobileMenuBtn" onClick={() => { scrollToSection('intro'); setShowMenu(false); }}>
             Tanıtım
           </button>
-          <button
-            className="mobileMenuBtn"
-            onClick={() => {
-              scrollToProjects();
-              setShowMenu(false); // Close the menu
-            }}
-          >
+          <button className="mobileMenuBtn" onClick={() => { scrollToSection('projects'); setShowMenu(false); }}>
             Projeler
           </button>
-          <button
-            className="mobileMenuBtn"
-            onClick={() => {
-              scrollToContact();
-              setShowMenu(false); // Close the menu
-            }}
-          >
+          <button className="mobileMenuBtn" onClick={() => { scrollToSection('contact'); setShowMenu(false); }}>
             İletişim
           </button>
         </div>

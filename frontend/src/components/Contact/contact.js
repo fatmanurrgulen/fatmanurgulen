@@ -137,7 +137,7 @@ const Contact = () => {
                         İletişim
                     </Typography>
                     <Typography variant="body1" color="textSecondary" textAlign="center" mb={4}>
-                        Sanırım bir mesajınız var hemen yazınız :)
+                        Sanırım bir mesajınız var :)
                     </Typography>
 
                     <form ref={form} onSubmit={sendEmail}>
