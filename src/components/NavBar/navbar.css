@@ -1,89 +1,106 @@
-.navbar {
-    background: rgb(255, 255, 255);
-    height: 5rem;
-    width: 100vw;
-    max-width: 120rem;
-    margin: 0 auto;
-    padding: 0 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 3;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Logo styling */
-  .logo {
-    object-fit: cover;
-    height: 2.5rem;
-    width: 13rem;
-    cursor: pointer;
-  }
-  
-  /* Button styling for desktop */
+/* Navbar Styling */
+.navbar { 
+  background-color: #ffffff; 
+  height: 5rem;
+  width: 100vw;
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Daha belirgin gölge efekti */
+  transition: background-color 0.3s; /* Arka plan geçiş efekti */
+}
+
+/* Logo Styling */
+.logo {
+  object-fit: cover;
+  height: 2.5rem;
+  width: 13rem;
+  cursor: pointer;
+}
+
+/* Button Styling for Desktop */
+.desktopMenuBtn {
+  background-color: #c12a8c;
+  color: #ffffff;
+  border: none;
+  padding: 0.7rem 1.75rem;
+  border-radius: 25px; /* Daha yumuşak bir görünüm için */
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 1.5rem;
+  transition: background-color 0.3s, transform 0.3s; /* Geçiş efektleri */
+}
+
+.desktopMenuBtn:hover {
+  background-color: #e09bc1;
+  transform: scale(1.05); /* Hover durumunda buton büyümesi */
+}
+
+/* Mobile Menu Icon */
+.mobMenu {
+  display: none; /* Mobilde gizli */
+  height: 1.8rem;
+}
+
+/* Mobile Menu Button */
+.mobileMenuBtn {
+  background-color: #c12a8c;
+  color: #ffffff;
+  padding: 0.5rem 3rem;
+  margin: 0.25rem;
+  border-radius: 25px; /* Daha yumuşak bir görünüm için */
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s; /* Geçiş efektleri */
+}
+
+.mobileMenuBtn:hover {
+  background-color: #e09bc1;
+  transform: scale(1.05); /* Hover durumunda buton büyümesi */
+}
+
+/* Mobile Dropdown Menu */
+.navMenu {
+  position: absolute;
+  top: 4rem;
+  right: 2rem;
+  display: none; /* Başlangıçta gizli */
+  flex-direction: column;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  background-color: #ffffff; /* Arka plan rengi */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Dropdown menü için gölge efekti */
+}
+
+/* Responsive Design for Mobile Devices */
+@media screen and (max-width: 720px) {
   .desktopMenuBtn {
-    background: #c12a8c;
-    color: white;
-    border: none;
-    padding: 0.7rem 1.75rem;
-    border-radius: 2.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-right: 1.5rem;
+    display: none; /* Desktop butonu gizli */
   }
-  
-  .desktopMenuBtn:hover {
-    background: #e09bc1;
-  }
-  
-  /* Mobile Menu Icon */
+
   .mobMenu {
-    display: none;
-    height: 1.8rem;
+    display: flex; /* Mobil menü ikonu göster */
   }
-  
-  /* Mobile Menu Button */
-  .mobileMenuBtn {
-    color: white;
-    background: #c12a8c;
-    padding: 0.5rem 3rem;
-    margin: 0.25rem;
-    border-radius: 2.5rem;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .mobileMenuBtn:hover {
-    background-color: #e09bc1;
-  }
-  
-  /* Mobile Dropdown Menu */
+
   .navMenu {
-    position: absolute;
-    top: 4rem;
-    right: 2rem;
-    display: none;
-    flex-direction: column;
-    padding: 0.5rem;
-    background: white;
-    border-radius: 1rem;
+    display: flex; /* Mobil menü göster */
+    animation: fadeIn 0.3s; /* Animasyon efekti eklendi */
   }
-  
-  /* Responsive Design for Mobile Devices */
-  @media screen and (max-width: 720px) {
-    .desktopMenuBtn {
-      display: none;
-    }
-  
-    .mobMenu {
-      display: flex;
-    }
-  
-    .navMenu {
-      display: flex;
-    }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
+  to {
+    opacity: 1;
+  }
+}

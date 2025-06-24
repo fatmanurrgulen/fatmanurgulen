@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react'; 
+import React from 'react'; 
 import { Typewriter } from 'react-simple-typewriter';
 import { FaDownload, FaGithub } from 'react-icons/fa';
 import './intro.css';
 import bg from '../../assets/image.png';
 
 const Intro = () => {
-  // Fare hareketine bağlı resmi kaçırma işlemi kaldırıldı.
   return (
     <section id="intro" className="intro-section">
       <div className="intro-content">
-        <h1 className="intro-heading">
+        {/* Selamlar kısmı için ayrı id */}
+        <h1 id="selamlar" className="intro-heading">
           Selamlar, <br />
           Ben <span className="intro-name">
             <Typewriter
@@ -26,7 +26,8 @@ const Intro = () => {
           Front-End Geliştiriciyim
         </h1>
         <p className="intro-description">
-        Modern web teknolojileriyle kullanıcı dostu, estetik ve işlevsel arayüzler tasarlayan bir frontend geliştiricisiyim. React.js ve Next.js gibi güçlü frameworklerle projeler geliştiriyor, aynı zamanda mobil uyumlu ve responsive tasarımlar oluşturuyorum. Takım çalışmasında uyumlu bir şekilde çalışarak, her ekran boyutunda mükemmel çalışan, akıcı ve şık web deneyimleri sunmaya özen gösteriyorum.        </p>
+          Modern web teknolojileriyle kullanıcı dostu, estetik ve işlevsel arayüzler tasarlayan bir frontend geliştiricisiyim. React.js ve Next.js gibi güçlü frameworklerle projeler geliştiriyor, aynı zamanda mobil uyumlu ve responsive tasarımlar oluşturuyorum. Takım çalışmasında uyumlu bir şekilde çalışarak, her ekran boyutunda mükemmel çalışan, akıcı ve şık web deneyimleri sunmaya özen gösteriyorum.
+        </p>
 
         <div className="btn-group">
           <a href="/FatmaNurGulen_Cv.pdf" download="FatmaNurGulen_CV.pdf" className="btn">
