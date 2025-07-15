@@ -1,278 +1,170 @@
-import React, { useRef, useState } from 'react'; 
-import { TextField, Button, Container, Typography, Grid, Box, Paper, Snackbar, Alert } from '@mui/material';
-import { FaJsSquare, FaReact, FaNodeJs, FaTypo3, FaDatabase } from 'react-icons/fa';
+// src/components/Contact/Contact.jsx
+import React, { useRef, useState } from 'react';
+import {
+  Container,
+  Typography,
+  Grid,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+  Paper,
+  Box,
+  useTheme,
+} from '@mui/material';
+import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-import { keyframes } from '@emotion/react';
 
 const Contact = () => {
-    const form = useRef();
-    const contactSection = useRef(null);
-    const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [rotateIcons, setRotateIcons] = useState({
-        js: false,
-        react: false,
-        node: false,
-        typo: false,
-        db: false
-    });
+  const theme = useTheme();
+  const isDark = theme.palette.mode === 'dark';
+  const formRef = useRef();
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
-    const sendEmail = (e) => {
-        e.preventDefault();
+  const sendEmail = (e) => {
+    e.preventDefault();
+    const honeypot = e.target.honey.value;
+    if (honeypot) return; // Bot ise çık
 
-        emailjs.sendForm('service_qpzisf4', 'template_7rcebxe', form.current, 'nhOVeDyIyAxYLBWee')
-            .then((result) => {
-                console.log('SUCCESS!', result.text);
-                e.target.reset();
-                setOpenSnackbar(true);
-            }, (error) => {
-                console.log('FAILED...', error.text);
-            });
-    };
+    emailjs
+      .sendForm(
+        'service_qpzisf4',
+        'template_7rcebxe',
+        formRef.current,
+        'nhOVeDyIyAxYLBWee'
+      )
+      .then(() => {
+        e.target.reset();
+        setOpenSnackbar(true);
+      })
+      .catch((err) => {
+        console.error('Error:', err);
+      });
+  };
 
-    const handleCloseSnackbar = () => {
-        setOpenSnackbar(false);
-    };
-
-    const handleScrollToContact = () => {
-        if (contactSection.current) {
-            contactSection.current.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            console.log("contactSection is null");
-        }
-    };
-
-    // İkonların döndürme animasyonu
-    const rotate = keyframes`
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    `;
-
-    // İkonların mouse olaylarını yönet
-    const handleMouseEnter = (iconName) => {
-        setRotateIcons({ ...rotateIcons, [iconName]: true });
-    };
-
-    const handleMouseLeave = (iconName) => {
-        setRotateIcons({ ...rotateIcons, [iconName]: false });
-    };
-
-    return (
-        <Container maxWidth="md" sx={{ mt: 3 }}>
-            {/* Tools Section */}
-            <Box textAlign="center" mb={8}>
-            <Grid container spacing={4} justifyContent="center" sx={{ mt: 4, mb: 4 }}>
-    <Grid item>
-        <FaJsSquare
-            size={50}
-            style={{
-                color: "#F7DF1E",
-                transform: rotateIcons.js ? 'rotate(360deg)' : 'rotate(0deg)',
-                transition: 'transform 0.5s ease',
-                cursor: 'pointer',
+  return (
+    <Box id="contact" sx={{ py: 10, backgroundColor: 'transparent' }}>
+      <Container maxWidth="md">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <Paper
+            elevation={6}
+            sx={{
+              p: { xs: 3, md: 5 },
+              borderRadius: '20px',
+              backgroundColor: isDark ? '#1e1e2f' : '#fff',
+              border: `1px solid ${isDark ? '#e09bc1' : '#c12a8c'}`,
+              boxShadow: isDark
+                ? '0 8px 24px rgba(193, 42, 140, 0.15)'
+                : '0 8px 24px rgba(193, 42, 140, 0.08)',
             }}
-            onMouseEnter={() => handleMouseEnter('js')}
-            onMouseLeave={() => handleMouseLeave('js')}
-        />
-    </Grid>
-    <Grid item>
-        <FaReact
-            size={50}
-            style={{
-                color: "#61DAFB",
-                transform: rotateIcons.react ? 'rotate(360deg)' : 'rotate(0deg)',
-                transition: 'transform 0.5s ease',
-                cursor: 'pointer',
-            }}
-            onMouseEnter={() => handleMouseEnter('react')}
-            onMouseLeave={() => handleMouseLeave('react')}
-        />
-    </Grid>
-    <Grid item>
-        <FaNodeJs
-            size={50}
-            style={{
-                color: "#339933",
-                transform: rotateIcons.node ? 'rotate(360deg)' : 'rotate(0deg)',
-                transition: 'transform 0.5s ease',
-                cursor: 'pointer',
-            }}
-            onMouseEnter={() => handleMouseEnter('node')}
-            onMouseLeave={() => handleMouseLeave('node')}
-        />
-    </Grid>
-    <Grid item>
-        <FaTypo3
-            size={50}
-            style={{
-                color: "#FF8700",
-                transform: rotateIcons.typo ? 'rotate(360deg)' : 'rotate(0deg)',
-                transition: 'transform 0.5s ease',
-                cursor: 'pointer',
-            }}
-            onMouseEnter={() => handleMouseEnter('typo')}
-            onMouseLeave={() => handleMouseLeave('typo')}
-        />
-    </Grid>
-    <Grid item>
-        <FaDatabase
-            size={50}
-            style={{
-                color: "#00648B",
-                transform: rotateIcons.db ? 'rotate(360deg)' : 'rotate(0deg)',
-                transition: 'transform 0.5s ease',
-                cursor: 'pointer',
-            }}
-            onMouseEnter={() => handleMouseEnter('db')}
-            onMouseLeave={() => handleMouseLeave('db')}
-        />
-    </Grid>
-</Grid>
+          >
+            <Typography
+              variant="h4"
+              align="center"
+              sx={{
+                fontWeight: 700,
+                mb: 2.5,
+                color: isDark ? '#e09bc1' : '#c12a8c',
+              }}
+            >
+              İletişim
+            </Typography>
 
-            </Box>
+            <Typography
+              variant="body1"
+              align="center"
+              sx={{ mb: 6, color: isDark ? '#ccc' : '#555' }}
+            >
+              Her zaman ulaşabilirsiniz mesaj bırakmanız yeterli! ✉️
+            </Typography>
 
-            {/* Contact Section */}
-            <div ref={contactSection} id="contact">
-                <Paper elevation={3} sx={{ padding: 4, borderRadius: 4, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)", mb: 4 }}>
-                    <Typography variant="h4" component="h1" gutterBottom textAlign="center">
-                        İletişim
-                    </Typography>
-                    <Typography variant="body1" color="textSecondary" textAlign="center" mb={4}>
-                        Sanırım bir mesajınız var hemen yazınız :)
-                    </Typography>
+            <form ref={formRef} onSubmit={sendEmail}>
+              {/* Honeypot alanı */}
+              <input type="text" name="honey" style={{ display: 'none' }} />
 
-                    <form ref={form} onSubmit={sendEmail}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    fullWidth
-                                    label="Adınız"
-                                    name="user_name"
-                                    variant="outlined"
-                                    required
-                                    InputLabelProps={{ shrink: true }}
-                                    InputProps={{
-                                        sx: {
-                                            height: '56px',
-                                            '&:hover': { borderColor: '#c12a8c', transform: 'scale(1.02)' }, // Hover büyüme animasyonu
-                                            transition: 'transform 0.3s ease',
-                                            caretColor: '#c12a8c',
-                                            '& .MuiOutlinedInput-root': {
-                                                '& fieldset': {
-                                                    borderColor: '#c12a8c',
-                                                },
-                                                '&:hover fieldset': {
-                                                    borderColor: '#e09bc1',
-                                                },
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: '#c12a8c',
-                                                },
-                                            },
-                                        },
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    fullWidth
-                                    label="E-mail"
-                                    name="user_email"
-                                    variant="outlined"
-                                    type="email"
-                                    required
-                                    InputLabelProps={{ shrink: true }}
-                                    InputProps={{
-                                        sx: {
-                                            height: '56px',
-                                            '&:hover': { borderColor: '#c12a8c', transform: 'scale(1.02)' },
-                                            transition: 'transform 0.3s ease',
-                                            caretColor: '#c12a8c',
-                                            '& .MuiOutlinedInput-root': {
-                                                '& fieldset': {
-                                                    borderColor: '#c12a8c',
-                                                },
-                                                '&:hover fieldset': {
-                                                    borderColor: '#e09bc1',
-                                                },
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: '#c12a8c',
-                                                },
-                                            },
-                                        },
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    fullWidth
-                                    label="Mesajınız"
-                                    name="message"
-                                    variant="outlined"
-                                    multiline
-                                    rows={4}
-                                    required
-                                    InputLabelProps={{ shrink: true }}
-                                    InputProps={{
-                                        sx: {
-                                            '&:hover': { borderColor: '#c12a8c', transform: 'scale(1.02)' },
-                                            transition: 'transform 0.3s ease',
-                                            caretColor: '#c12a8c',
-                                            '& .MuiOutlinedInput-root': {
-                                                '& fieldset': {
-                                                    borderColor: '#c12a8c',
-                                                },
-                                                '&:hover fieldset': {
-                                                    borderColor: '#e09bc1',
-                                                },
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: '#c12a8c',
-                                                },
-                                            },
-                                        },
-                                    }}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Box mt={4} textAlign="center">
-                        <Button
-  type="submit"
-  variant="contained"
-  color="primary"
-  sx={{
-    backgroundColor: 'rgb(193, 42, 140)',
-    padding: '0.75rem 2.5rem',
-    borderRadius: '0.75rem',
-    fontFamily: "'Roboto', sans-serif",
-    fontWeight: 600,
-    fontSize: '1rem',
-    transition: 'all 0.3s ease',
-    boxShadow: '0 4px 15px rgba(193, 42, 140, 0.4)', // Glow efekti
-    '&:hover': {
-      backgroundColor: '#e09bc1',
-      color: '#fff',
-      transform: 'scale(1.05)', // Büyüme efekti
-    },
-    '&:active': {
-      transform: 'scale(1.02)', // Tıklama sonrası hafif küçülme
-      boxShadow: '0 0 15px rgba(193, 42, 140, 0.7)', // Ripple efekti
-    },
-  }}
->
-  Gönder
-</Button>
-</Box>
+              <Grid container spacing={3}>
+                {[
+                  { label: 'Adınız', name: 'user_name', type: 'text', sm: 6 },
+                  { label: 'E-posta', name: 'user_email', type: 'email', sm: 6 },
+                  { label: 'Mesajınız', name: 'message', type: 'textarea', rows: 5, sm: 12 },
+                ].map((field, i) => (
+                  <Grid item xs={12} sm={field.sm} key={i}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: i * 0.2 }}
+                    >
+                      <TextField
+                        fullWidth
+                        required
+                        name={field.name}
+                        label={field.label}
+                        type={field.type === 'textarea' ? undefined : field.type}
+                        multiline={field.type === 'textarea'}
+                        rows={field.rows || 1}
+                        variant="outlined"
+                        InputProps={{
+                          sx: {
+                            backgroundColor: isDark ? '#2c2c3a' : '#f9f9f9',
+                            borderRadius: '12px',
+                          },
+                        }}
+                      />
+                    </motion.div>
+                  </Grid>
+                ))}
+              </Grid>
 
-                    </form>
-                </Paper>
-            </div>
+              <Box mt={4} textAlign="center">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      px: 4,
+                      py: 1.2,
+                      borderRadius: '12px',
+                      backgroundColor: '#c12a8c',
+                      fontWeight: 600,
+                      textTransform: 'none',
+                      fontSize: '1rem',
+                      '&:hover': {
+                        backgroundColor: '#e09bc1',
+                        transform: 'scale(1.05)',
+                      },
+                    }}
+                  >
+                    Gönder
+                  </Button>
+                </motion.div>
+              </Box>
+            </form>
+          </Paper>
+        </motion.div>
+      </Container>
 
-            {/* Snackbar */}
-            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
-                    E-posta başarıyla gönderildi! En kısa sürede size geri döneceğim.
-                </Alert>
-            </Snackbar>
-        </Container>
-    );
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert severity="success" sx={{ width: '100%' }} onClose={() => setOpenSnackbar(false)}>
+          Mesaj başarıyla gönderildi! En kısa sürede dönüş yapacağım.
+        </Alert>
+      </Snackbar>
+    </Box>
+  );
 };
 
 export default Contact;

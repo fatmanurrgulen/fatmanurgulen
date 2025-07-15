@@ -1,0 +1,46 @@
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  background-color: var(--splash-bg);
+  color: var(--splash-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: background-color 0.3s ease;
+}
+
+.splash-title {
+  font-size: 2.8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.splash-subtitle {
+  font-size: 1.2rem;
+  margin-top: 0.8rem;
+  opacity: 0.85;
+}
+
+/* Renk paleti */
+:root {
+  --splash-bg: #ffffff;
+  --splash-text: #c12a8c;
+}
+
+body.dark :root {
+  --splash-bg: #1a1a1a;
+  --splash-text: #e09bc1;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .splash-title {
+    font-size: 2rem;
+  }
+
+  .splash-subtitle {
+    font-size: 1rem;
+  }
+}

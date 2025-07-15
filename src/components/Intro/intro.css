@@ -1,5 +1,5 @@
-/* Ana alan */
-#intro {
+/* GENEL YAPI */
+.intro-section {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,46 +8,96 @@
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  margin-top: 60px;
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  z-index: 1;
 }
 
-/* Büyük ekranlarda yatay hizalama */
 @media (min-width: 900px) {
-  #intro {
+  .intro-section {
     flex-direction: row;
     padding: 8vh 2rem;
   }
 }
 
-/* Sol içerik */
+/* KUTU STİLİ */
 .intro-content {
   flex: 1;
   text-align: center;
+  padding: 2rem;
+  border-radius: 20px;
+  background-color: #ffffff;
+  border: 1px solid #f4bcd9;
+  box-shadow: 0 4px 16px rgba(193, 42, 140, 0.05);
+  max-width: 600px;
+  margin: 0 auto;
+  transition: all 0.3s ease;
 }
 
-/* Başlık */
+.intro-section.dark .intro-content {
+  background-color: #1e1e2f;
+  border: 1px solid #e09bc1;
+  box-shadow: 0 8px 24px rgba(193, 42, 140, 0.1);
+}
+
+/* GLOW ARKA PLAN */
+.intro-glow-bg {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #e09bc188, transparent 70%);
+  filter: blur(120px);
+  z-index: -2;
+  animation: pulseGlow 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+/* BAŞLIK */
 .intro-heading {
   font-size: clamp(1.8rem, 2.5vw, 2.8rem);
-  color: #e052b2;
   font-weight: bold;
   margin-bottom: 1rem;
+  color: #c12a8c;
+  word-break: break-word;
 }
 
 .intro-name {
-  color: #c12a8c;
+  color: #e052b2;
 }
 
-/* Açıklama */
+.intro-section.dark .intro-heading {
+  color: #e09bc1;
+}
+
+.intro-section.dark .intro-name {
+  color: #ffb3d8;
+}
+
+/* AÇIKLAMA */
 .intro-description {
   font-size: 1rem;
-  color: #444;
   max-width: 40rem;
   margin: 0 auto 1.5rem;
+  color: #444;
+  line-height: 1.65;
 }
 
-/* Buton grubu */
+.intro-section.dark .intro-description {
+  color: #ccc;
+}
+
+/* BUTONLAR */
 .btn-group {
   display: flex;
   gap: 1rem;
@@ -57,7 +107,7 @@
 
 .btn {
   background-color: #c12a8c;
-  color: #fff;
+  color: white;
   padding: 0.7rem 1.5rem;
   border-radius: 30px;
   font-size: 1rem;
@@ -70,15 +120,29 @@
 
 .btn:hover {
   background-color: #e09bc1;
-  transform: translateY(-3px);
+  box-shadow: 0 0 10px #e09bc1cc, 0 0 20px #c12a8c88;
+  transform: translateY(-4px) scale(1.03);
 }
 
-/* Görsel */
+.intro-section.dark .btn {
+  background-color: #c12a8c;
+  color: #fff;
+}
+
+.intro-section.dark .btn:hover {
+  background-color: #e09bc1;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* PROFİL GÖRSELİ */
 .intro-bg-wrapper {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
 }
 
 .intro-bg {
@@ -88,41 +152,47 @@
   border-radius: 50%;
   background-color: #f7df1e;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
 
-/* Responsive görsel */
+.rotating-border {
+  position: absolute;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 50%;
+  border: 2px dashed #e09bc1;
+  animation: spinBorder 12s linear infinite;
+  z-index: -1;
+}
+
+@keyframes spinBorder {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @media (max-width: 900px) {
-  .intro-bg {
-    width: 14rem;
-    height: 14rem;
-  }
+  .intro-bg { width: 14rem; height: 14rem; }
+  .rotating-border { width: 14rem; height: 14rem; }
 }
 
 @media (max-width: 600px) {
-  .intro-heading {
-    font-size: 1.8rem;
-  }
-
-  .btn {
-    font-size: 0.9rem;
-    padding: 0.6rem 1.2rem;
-  }
-
-  .intro-bg {
-    width: 12rem;
-    height: 12rem;
-  }
+  .intro-heading { font-size: 1.8rem; }
+  .btn { font-size: 0.9rem; padding: 0.6rem 1.2rem; }
+  .intro-bg { width: 12rem; height: 12rem; }
+  .rotating-border { width: 12rem; height: 12rem; }
+  .intro-content { padding: 1.2rem; }
 }
 
-/* Baloncuk animasyonu */
+/* BALONCUK ANİMASYONLARI */
 .bubble {
   position: absolute;
-  background-color: #e09bc1;
+  background: linear-gradient(135deg, #e09bc1, #c12a8c);
   border-radius: 50%;
   pointer-events: none;
-  animation: rise 5s infinite ease-in-out;
+  animation: rise 6s ease-in-out infinite;
   z-index: -1;
-  opacity: 0.5;
+  opacity: 0.6;
+  box-shadow: 0 0 8px #e09bc188;
 }
 
 @keyframes rise {
@@ -131,24 +201,68 @@
     opacity: 1;
   }
   100% {
-    transform: translateY(-100px) scale(1.2) rotate(45deg);
+    transform: translateY(-200px) scale(1.2) rotate(360deg);
     opacity: 0;
   }
 }
 
-/* Baloncukların konumları */
-.bubble-1 { width: 20px; height: 20px; top: 30%; left: 10%; animation-delay: 0s; }
-.bubble-2 { width: 30px; height: 30px; top: 50%; left: 25%; animation-delay: 1s; }
-.bubble-3 { width: 25px; height: 25px; top: 70%; left: 40%; animation-delay: 2s; }
-.bubble-4 { width: 15px; height: 15px; top: 80%; left: 60%; animation-delay: 3s; }
-.bubble-5 { width: 35px; height: 35px; top: 40%; left: 80%; animation-delay: 4s; }
-.bubble-6 { width: 20px; height: 20px; top: 20%; left: 15%; animation-delay: 0.5s; }
-.bubble-7 { width: 25px; height: 25px; top: 60%; left: 30%; animation-delay: 1.5s; }
-.bubble-8 { width: 30px; height: 30px; top: 45%; left: 55%; animation-delay: 2.5s; }
-.bubble-9 { width: 15px; height: 15px; top: 75%; left: 70%; animation-delay: 3.5s; }
-.bubble-10 { width: 40px; height: 40px; top: 35%; left: 85%; animation-delay: 4.5s; }
-.bubble-11 { width: 35px; height: 35px; top: 40%; left: 80%; animation-delay: 4s; }
-.bubble-12 { width: 20px; height: 20px; top: 20%; left: 15%; animation-delay: 0.5s; }
-.bubble-13 { width: 25px; height: 25px; top: 60%; left: 30%; animation-delay: 1.5s; }
-.bubble-14 { width: 30px; height: 30px; top: 45%; left: 55%; animation-delay: 2.5s; }
-.bubble-15 { width: 15px; height: 15px; top: 75%; left: 70%; animation-delay: 3.5s; }
+/* BALON KONUM & BOYUT */
+.bubble-1 { width: 20px; height: 20px; top: 30%; left: 2%; animation-delay: 0s; }
+.bubble-2 { width: 30px; height: 30px; top: 50%; left: 12%; animation-delay: 1s; }
+.bubble-3 { width: 25px; height: 25px; top: 70%; left: 25%; animation-delay: 2s; }
+.bubble-4 { width: 15px; height: 15px; top: 80%; left: 38%; animation-delay: 3s; }
+.bubble-5 { width: 35px; height: 35px; top: 40%; left: 51%; animation-delay: 4s; }
+.bubble-6 { width: 20px; height: 20px; top: 20%; left: 64%; animation-delay: 0.5s; }
+.bubble-7 { width: 25px; height: 25px; top: 60%; left: 72%; animation-delay: 1.5s; }
+.bubble-8 { width: 30px; height: 30px; top: 45%; left: 79%; animation-delay: 2.5s; }
+.bubble-9 { width: 15px; height: 15px; top: 75%; left: 88%; animation-delay: 3.5s; }
+.bubble-10 { width: 40px; height: 40px; top: 35%; left: 96%; animation-delay: 4.5s; }
+.bubble-11 { width: 35px; height: 35px; top: 42%; left: 18%; animation-delay: 1.2s; }
+.bubble-12 { width: 22px; height: 22px; top: 28%; left: 45%; animation-delay: 1.7s; }
+.bubble-13 { width: 27px; height: 27px; top: 65%; left: 67%; animation-delay: 2.2s; }
+.bubble-14 { width: 18px; height: 18px; top: 83%; left: 83%; animation-delay: 2.8s; }
+.bubble-15 { width: 32px; height: 32px; top: 38%; left: 94%; animation-delay: 3.3s; }
+
+/* SCROLL ARROW */
+.scroll-arrow {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  color: #c12a8c;
+  cursor: pointer;
+  animation: bounce 2s infinite, glowArrow 3s ease-in-out infinite;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.scroll-arrow:hover {
+  color: #e09bc1;
+}
+
+.intro-section.dark .scroll-arrow {
+  color: #f08dc5;
+}
+
+.intro-section.dark .scroll-arrow:hover {
+  color: #ffb3d8;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(10px);
+  }
+}
+
+@keyframes glowArrow {
+  0%, 100% {
+    text-shadow: 0 0 5px #e09bc1, 0 0 10px #c12a8c;
+  }
+  50% {
+    text-shadow: 0 0 15px #e09bc1, 0 0 30px #c12a8c;
+  }
+}
