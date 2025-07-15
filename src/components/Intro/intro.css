@@ -5,15 +5,15 @@
   align-items: center;
   justify-content: center;
   padding: 6vh 1.5rem;
-  gap: 2rem;
+  gap: 1rem;
   max-width: 1200px;
   margin: 0 auto;
   margin-top: 60px;
   position: relative;
   box-sizing: border-box;
-  overflow: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
   z-index: 1;
+  flex-wrap: wrap;
 }
 
 @media (min-width: 900px) {
@@ -35,6 +35,8 @@
   max-width: 600px;
   margin: 0 auto;
   transition: all 0.3s ease;
+  min-height: 0;
+  flex-shrink: 1;
 }
 
 .intro-section.dark .intro-content {
@@ -143,6 +145,8 @@
   align-items: center;
   margin-bottom: 2rem;
   position: relative;
+  min-height: 0;
+  flex-shrink: 1;
 }
 
 .intro-bg {
@@ -170,17 +174,58 @@
   100% { transform: rotate(360deg); }
 }
 
+/* RESPONSIVE */
 @media (max-width: 900px) {
   .intro-bg { width: 14rem; height: 14rem; }
   .rotating-border { width: 14rem; height: 14rem; }
 }
 
 @media (max-width: 600px) {
-  .intro-heading { font-size: 1.8rem; }
-  .btn { font-size: 0.9rem; padding: 0.6rem 1.2rem; }
-  .intro-bg { width: 12rem; height: 12rem; }
-  .rotating-border { width: 12rem; height: 12rem; }
-  .intro-content { padding: 1.2rem; }
+  .intro-heading {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .intro-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .intro-bg {
+    width: 12rem;
+    height: 12rem;
+  }
+
+  .rotating-border {
+    width: 12rem;
+    height: 12rem;
+  }
+
+  .intro-content {
+    padding: 1.2rem;
+    margin-top: -1rem;
+  }
+
+  .intro-bg-wrapper {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .intro-bg {
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .rotating-border {
+    width: 10rem;
+    height: 10rem;
+  }
 }
 
 /* BALONCUK ANİMASYONLARI */

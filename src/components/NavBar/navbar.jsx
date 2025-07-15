@@ -191,6 +191,8 @@ const Navbar = ({ toggleTheme }) => {
                 border: 'none',
                 borderRadius: '6px',
                 cursor: 'pointer',
+                color: theme.palette.text.primary,
+                WebkitTapHighlightColor: 'transparent', 
                 transition: 'all 0.2s ease-in-out',
                 '&:hover': {
                   bgcolor: '#f5b2d1',
