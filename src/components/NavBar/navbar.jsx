@@ -48,7 +48,10 @@ const Navbar = ({ toggleTheme }) => {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
+  let timeout;
+  const handleScroll = () => {
+    if (timeout) return;
+    timeout = setTimeout(() => {
       const offset = 120;
       const sections = menuItems.map((item) => ({
         id: item.id,
@@ -58,12 +61,14 @@ const Navbar = ({ toggleTheme }) => {
       if (current?.id && current.id !== activeSection) {
         setActiveSection(current.id);
       }
-    };
+      timeout = null;
+    }, 100); // 100ms throttle
+  };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeSection]);
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+}, [activeSection]);
+
 
   return (
     <Box component="header" sx={{
