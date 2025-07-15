@@ -162,6 +162,8 @@ const Navbar = ({ toggleTheme }) => {
           ref={menuRef}
           sx={{
             width: '100%',
+            maxWidth: '100vw', // ✅ Mobil taşmayı engeller
+            overflowX: 'hidden',
             bgcolor: theme.palette.background.paper,
             color: theme.palette.text.primary,
             boxShadow: 4,
@@ -192,7 +194,7 @@ const Navbar = ({ toggleTheme }) => {
                 borderRadius: '6px',
                 cursor: 'pointer',
                 color: theme.palette.text.primary,
-                WebkitTapHighlightColor: 'transparent', 
+                WebkitTapHighlightColor: 'transparent',
                 transition: 'all 0.2s ease-in-out',
                 '&:hover': {
                   bgcolor: '#f5b2d1',

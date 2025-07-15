@@ -29,14 +29,15 @@ const AppContent = () => {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
-      <Navbar toggleTheme={toggleColorMode} />
-
-      <Intro />
-      <Technologies />
-      <Projects />
-      <Certificates />
-      <Contact />
-      <Footer />
+      <div style={{ overflowX: 'hidden', maxWidth: '100vw' }}>
+        <Navbar toggleTheme={toggleColorMode} />
+        <Intro />
+        <Technologies />
+        <Projects />
+        <Certificates />
+        <Contact />
+        <Footer />
+      </div>
     </>
   );
 };
