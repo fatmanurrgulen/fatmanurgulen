@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import {
   IconButton,
   useTheme,
@@ -14,72 +14,105 @@ import menuIcon from '../../assets/menu.png';
 const Navbar = ({ toggleTheme }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+
   const menuRef = useRef(null);
 
-  const menuItems = [
+  // ✅ useMemo ile stabilize edildi
+  const menuItems = useMemo(() => [
     { id: 'intro', label: 'Tanıtım' },
     { id: 'technologies', label: 'Teknolojiler' },
     { id: 'projects', label: 'Projeler' },
     { id: 'certificates', label: 'Sertifikalar' },
     { id: 'contact', label: 'İletişim' },
-  ];
+  ], []);
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     const offset = 80;
+
     if (element) {
-      const top = element.getBoundingClientRect().top + window.pageYOffset - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+      const top =
+        element.getBoundingClientRect().top +
+        window.pageYOffset -
+        offset;
+
+      window.scrollTo({
+        top,
+        behavior: 'smooth',
+      });
     }
+
     setActiveSection(id);
     setMenuOpen(false);
   };
 
+  // ✅ Menü dışına tıklayınca kapatma
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setMenuOpen(false);
       }
     };
+
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
+  // ✅ Scroll aktif section tespiti (optimize)
   useEffect(() => {
-  let timeout;
-  const handleScroll = () => {
-    if (timeout) return;
-    timeout = setTimeout(() => {
-      const offset = 120;
-      const sections = menuItems.map((item) => ({
-        id: item.id,
-        top: document.getElementById(item.id)?.getBoundingClientRect().top,
-      }));
-      const current = sections.find((s) => s.top >= 0 && s.top < offset + 40);
-      if (current?.id && current.id !== activeSection) {
-        setActiveSection(current.id);
-      }
-      timeout = null;
-    }, 100); // 100ms throttle
-  };
+    let timeout = null;
 
-  window.addEventListener('scroll', handleScroll);
-  return () => window.removeEventListener('scroll', handleScroll);
-}, [activeSection]);
+    const handleScroll = () => {
+      if (timeout) return;
 
+      timeout = setTimeout(() => {
+        const offset = 120;
+
+        const sections = menuItems.map((item) => ({
+          id: item.id,
+          top: document
+            .getElementById(item.id)
+            ?.getBoundingClientRect().top,
+        }));
+
+        const current = sections.find(
+          (s) => s.top >= 0 && s.top < offset + 40
+        );
+
+        if (current?.id && current.id !== activeSection) {
+          setActiveSection(current.id);
+        }
+
+        timeout = null;
+      }, 100);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [activeSection, menuItems]);
 
   return (
-    <Box component="header" sx={{
-      position: 'fixed',
-      top: 0,
-      width: '100%',
-      bgcolor: theme.palette.background.paper,
-      color: theme.palette.text.primary,
-      boxShadow: 3,
-      zIndex: 1200,
-    }}>
+    <Box
+      component="header"
+      sx={{
+        position: 'fixed',
+        top: 0,
+        width: '100%',
+        bgcolor: theme.palette.background.paper,
+        color: theme.palette.text.primary,
+        boxShadow: 3,
+        zIndex: 1200,
+      }}
+    >
       <Container
         maxWidth="lg"
         sx={{
@@ -91,7 +124,10 @@ const Navbar = ({ toggleTheme }) => {
         }}
       >
         {/* Logo */}
-        <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => scrollToSection('intro')}>
+        <Box
+          sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+          onClick={() => scrollToSection('intro')}
+        >
           <Box
             component="img"
             src={logo}
@@ -100,7 +136,7 @@ const Navbar = ({ toggleTheme }) => {
           />
         </Box>
 
-        {/* Masaüstü Menü */}
+        {/* Desktop Menu */}
         {!isMobile && (
           <Box component="nav" sx={{ display: 'flex', gap: 3 }}>
             {menuItems.map((item) => (
@@ -120,14 +156,17 @@ const Navbar = ({ toggleTheme }) => {
                   borderRadius: '8px',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease-in-out',
+
                   '&:hover': {
                     bgcolor: '#f5b2d1',
                     color: '#fff',
                   },
+
                   '&:active': {
                     bgcolor: '#c12a8c',
                     color: '#fff',
                   },
+
                   '&::after': {
                     content: '""',
                     position: 'absolute',
@@ -135,7 +174,10 @@ const Navbar = ({ toggleTheme }) => {
                     left: 8,
                     right: 8,
                     height: '2px',
-                    backgroundColor: activeSection === item.id ? '#c12a8c' : 'transparent',
+                    backgroundColor:
+                      activeSection === item.id
+                        ? '#c12a8c'
+                        : 'transparent',
                     transition: 'all 0.2s ease-in-out',
                     borderRadius: 1,
                   },
@@ -147,27 +189,34 @@ const Navbar = ({ toggleTheme }) => {
           </Box>
         )}
 
-        {/* Sağ kısım */}
+        {/* Right Side */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <IconButton onClick={toggleTheme} color="inherit">
-            {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
+            {theme.palette.mode === 'dark'
+              ? <Brightness7 />
+              : <Brightness4 />}
           </IconButton>
 
           {isMobile && (
             <Box onClick={() => setMenuOpen(!menuOpen)}>
-              <Box component="img" src={menuIcon} alt="menu" sx={{ width: 28, cursor: 'pointer' }} />
+              <Box
+                component="img"
+                src={menuIcon}
+                alt="menu"
+                sx={{ width: 28, cursor: 'pointer' }}
+              />
             </Box>
           )}
         </Box>
       </Container>
 
-      {/* Mobil Menü */}
+      {/* Mobile Menu */}
       <Slide direction="down" in={menuOpen} mountOnEnter unmountOnExit>
         <Box
           ref={menuRef}
           sx={{
             width: '100%',
-            maxWidth: '100vw', // ✅ Mobil taşmayı engeller
+            maxWidth: '100vw',
             overflowX: 'hidden',
             bgcolor: theme.palette.background.paper,
             color: theme.palette.text.primary,
@@ -199,16 +248,18 @@ const Navbar = ({ toggleTheme }) => {
                 borderRadius: '6px',
                 cursor: 'pointer',
                 color: theme.palette.text.primary,
-                WebkitTapHighlightColor: 'transparent',
                 transition: 'all 0.2s ease-in-out',
+
                 '&:hover': {
                   bgcolor: '#f5b2d1',
                   color: '#fff',
                 },
+
                 '&:active': {
                   bgcolor: '#c12a8c',
                   color: '#fff',
                 },
+
                 '&::after': {
                   content: '""',
                   position: 'absolute',
@@ -216,7 +267,10 @@ const Navbar = ({ toggleTheme }) => {
                   left: 8,
                   right: 8,
                   height: '2px',
-                  backgroundColor: activeSection === item.id ? '#c12a8c' : 'transparent',
+                  backgroundColor:
+                    activeSection === item.id
+                      ? '#c12a8c'
+                      : 'transparent',
                   transition: 'all 0.2s ease-in-out',
                   borderRadius: 1,
                 },
