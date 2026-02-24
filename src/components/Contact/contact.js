@@ -20,29 +20,37 @@ const Contact = () => {
   const isDark = theme.palette.mode === 'dark';
   const formRef = useRef();
   const [snackbar, setSnackbar] = useState({ open: false, type: 'success', message: '' });
+  const [loading, setLoading] = useState(false);
 
-  const sendEmail = (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
+    const honeypot = formRef.current?.elements?.honey?.value;
+    if (honeypot) return; // Bot ise çık
 
-    // Honeypot bot kontrolü
-    const honeypot = e.target.honey.value;
-    if (honeypot) return;
-
-    emailjs
-      .sendForm(
-        'service_qpzisf4',    // MailJS servis ID
-        'template_7rcebxe',   // MailJS template ID
+    setLoading(true);
+    try {
+      await emailjs.sendForm(
+        'service_qpzisf4',
+        'template_7rcebxe',
         formRef.current,
-        'nhOVeDyIyAxYLBWee'   // MailJS public key
-      )
-      .then(() => {
-        e.target.reset();
-        setSnackbar({ open: true, type: 'success', message: 'Mesaj başarıyla gönderildi! En kısa sürede dönüş yapacağım.' });
-      })
-      .catch((err) => {
-        console.error('Error:', err);
-        setSnackbar({ open: true, type: 'error', message: 'Mesaj gönderilemedi. Lütfen tekrar deneyin.' });
+        'nhOVeDyIyAxYLBWee'
+      );
+      formRef.current.reset();
+      setSnackbar({
+        open: true,
+        type: 'success',
+        message: 'Mesaj başarıyla gönderildi! En kısa sürede dönüş yapacağım.',
       });
+    } catch (err) {
+      console.error('Error:', err);
+      setSnackbar({
+        open: true,
+        type: 'error',
+        message: 'Mesaj gönderilemedi. Lütfen tekrar deneyin.',
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -83,7 +91,6 @@ const Contact = () => {
             </Typography>
 
             <form ref={formRef} onSubmit={sendEmail}>
-              {/* Honeypot */}
               <input type="text" name="honey" style={{ display: 'none' }} />
 
               <Grid container spacing={3}>
@@ -102,7 +109,7 @@ const Contact = () => {
                       <TextField
                         fullWidth
                         required
-                        name={field.name}       // MailJS template ile birebir uyumlu
+                        name={field.name}
                         label={field.label}
                         type={field.type === 'textarea' ? undefined : field.type}
                         multiline={field.type === 'textarea'}
@@ -112,6 +119,7 @@ const Contact = () => {
                           sx: {
                             backgroundColor: isDark ? '#2c2c3a' : '#f9f9f9',
                             borderRadius: '12px',
+                            transition: 'all 0.3s ease',
                           },
                         }}
                       />
@@ -130,6 +138,7 @@ const Contact = () => {
                   <Button
                     type="submit"
                     variant="contained"
+                    disabled={loading}
                     sx={{
                       px: 4,
                       py: 1.2,
@@ -138,13 +147,18 @@ const Contact = () => {
                       fontWeight: 600,
                       textTransform: 'none',
                       fontSize: '1rem',
+                      transition: 'all 0.3s ease',
                       '&:hover': {
                         backgroundColor: '#e09bc1',
                         transform: 'scale(1.05)',
                       },
+                      '&:disabled': {
+                        backgroundColor: '#aaa',
+                        cursor: 'not-allowed',
+                      },
                     }}
                   >
-                    Gönder
+                    {loading ? 'Gönderiliyor...' : 'Gönder'}
                   </Button>
                 </motion.div>
               </Box>
