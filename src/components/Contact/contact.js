@@ -19,26 +19,31 @@ const Contact = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
   const formRef = useRef();
-  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbar, setSnackbar] = useState({ open: false, severity: 'success', message: '' });
 
   const sendEmail = (e) => {
     e.preventDefault();
-    const honeypot = e.target.honey.value;
-    if (honeypot) return; // Bot ise çık
+
+    // Honeypot bot kontrolü
+    const honeypot = formRef.current.honey.value;
+    if (honeypot) return;
+
+    console.log('SendEmail tetiklendi'); // Debug
 
     emailjs
       .sendForm(
-        'service_qpzisf4',
-        'template_7rcebxe',
+        'service_qpzisf4', // kendi serviceID
+        'template_7rcebxe', // kendi templateID
         formRef.current,
-        'nhOVeDyIyAxYLBWee'
+        'nhOVeDyIyAxYLBWee' // kendi publicKey
       )
       .then(() => {
-        e.target.reset();
-        setOpenSnackbar(true);
+        formRef.current.reset();
+        setSnackbar({ open: true, severity: 'success', message: 'Mesaj başarıyla gönderildi!' });
       })
       .catch((err) => {
-        console.error('Error:', err);
+        console.error('MailJS Hatası:', err);
+        setSnackbar({ open: true, severity: 'error', message: 'Mesaj gönderilemedi. Lütfen izinleri kontrol edin.' });
       });
   };
 
@@ -66,11 +71,7 @@ const Contact = () => {
             <Typography
               variant="h4"
               align="center"
-              sx={{
-                fontWeight: 700,
-                mb: 2.5,
-                color: isDark ? '#e09bc1' : '#c12a8c',
-              }}
+              sx={{ fontWeight: 700, mb: 2.5, color: isDark ? '#e09bc1' : '#c12a8c' }}
             >
               İletişim
             </Typography>
@@ -80,45 +81,52 @@ const Contact = () => {
               align="center"
               sx={{ mb: 6, color: isDark ? '#ccc' : '#555' }}
             >
-              Her zaman ulaşabilirsiniz mesaj bırakmanız yeterli! ✉️
+              Her zaman ulaşabilirsiniz, mesaj bırakmanız yeterli! ✉️
             </Typography>
 
             <form ref={formRef} onSubmit={sendEmail}>
-              {/* Honeypot alanı */}
               <input type="text" name="honey" style={{ display: 'none' }} />
 
               <Grid container spacing={3}>
-                {[
-                  { label: 'Adınız', name: 'user_name', type: 'text', sm: 6 },
-                  { label: 'E-posta', name: 'user_email', type: 'email', sm: 6 },
-                  { label: 'Mesajınız', name: 'message', type: 'textarea', rows: 5, sm: 12 },
-                ].map((field, i) => (
-                  <Grid item xs={12} sm={field.sm} key={i}>
-                    <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: i * 0.2 }}
-                    >
-                      <TextField
-                        fullWidth
-                        required
-                        name={field.name}
-                        label={field.label}
-                        type={field.type === 'textarea' ? undefined : field.type}
-                        multiline={field.type === 'textarea'}
-                        rows={field.rows || 1}
-                        variant="outlined"
-                        InputProps={{
-                          sx: {
-                            backgroundColor: isDark ? '#2c2c3a' : '#f9f9f9',
-                            borderRadius: '12px',
-                          },
-                        }}
-                      />
-                    </motion.div>
-                  </Grid>
-                ))}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    name="user_name"
+                    label="Adınız"
+                    variant="outlined"
+                    InputProps={{
+                      sx: { backgroundColor: isDark ? '#2c2c3a' : '#f9f9f9', borderRadius: '12px' },
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    name="user_email"
+                    type="email"
+                    label="E-posta"
+                    variant="outlined"
+                    InputProps={{
+                      sx: { backgroundColor: isDark ? '#2c2c3a' : '#f9f9f9', borderRadius: '12px' },
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    multiline
+                    rows={5}
+                    name="message"
+                    label="Mesajınız"
+                    variant="outlined"
+                    InputProps={{
+                      sx: { backgroundColor: isDark ? '#2c2c3a' : '#f9f9f9', borderRadius: '12px' },
+                    }}
+                  />
+                </Grid>
               </Grid>
 
               <Box mt={4} textAlign="center">
@@ -139,10 +147,7 @@ const Contact = () => {
                       fontWeight: 600,
                       textTransform: 'none',
                       fontSize: '1rem',
-                      '&:hover': {
-                        backgroundColor: '#e09bc1',
-                        transform: 'scale(1.05)',
-                      },
+                      '&:hover': { backgroundColor: '#e09bc1', transform: 'scale(1.05)' },
                     }}
                   >
                     Gönder
@@ -155,12 +160,16 @@ const Contact = () => {
       </Container>
 
       <Snackbar
-        open={openSnackbar}
+        open={snackbar.open}
         autoHideDuration={5000}
-        onClose={() => setOpenSnackbar(false)}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
       >
-        <Alert severity="success" sx={{ width: '100%' }} onClose={() => setOpenSnackbar(false)}>
-          Mesaj başarıyla gönderildi! En kısa sürede dönüş yapacağım.
+        <Alert
+          severity={snackbar.severity}
+          sx={{ width: '100%' }}
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+        >
+          {snackbar.message}
         </Alert>
       </Snackbar>
     </Box>
