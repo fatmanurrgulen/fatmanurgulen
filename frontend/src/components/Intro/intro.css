@@ -1,0 +1,154 @@
+/* Ana alan */
+#intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6vh 1.5rem;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Büyük ekranlarda yatay hizalama */
+@media (min-width: 900px) {
+  #intro {
+    flex-direction: row;
+    padding: 8vh 2rem;
+  }
+}
+
+/* Sol içerik */
+.intro-content {
+  flex: 1;
+  text-align: center;
+}
+
+/* Başlık */
+.intro-heading {
+  font-size: clamp(1.8rem, 2.5vw, 2.8rem);
+  color: #e052b2;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.intro-name {
+  color: #c12a8c;
+}
+
+/* Açıklama */
+.intro-description {
+  font-size: 1rem;
+  color: #444;
+  max-width: 40rem;
+  margin: 0 auto 1.5rem;
+}
+
+/* Buton grubu */
+.btn-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  background-color: #c12a8c;
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #e09bc1;
+  transform: translateY(-3px);
+}
+
+/* Görsel */
+.intro-bg-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.intro-bg {
+  width: 16rem;
+  height: 16rem;
+  object-fit: cover;
+  border-radius: 50%;
+  background-color: #f7df1e;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive görsel */
+@media (max-width: 900px) {
+  .intro-bg {
+    width: 14rem;
+    height: 14rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .intro-heading {
+    font-size: 1.8rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .intro-bg {
+    width: 12rem;
+    height: 12rem;
+  }
+}
+
+/* Baloncuk animasyonu */
+.bubble {
+  position: absolute;
+  background-color: #e09bc1;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: rise 5s infinite ease-in-out;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) scale(1.2) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+/* Baloncukların konumları */
+.bubble-1 { width: 20px; height: 20px; top: 30%; left: 10%; animation-delay: 0s; }
+.bubble-2 { width: 30px; height: 30px; top: 50%; left: 25%; animation-delay: 1s; }
+.bubble-3 { width: 25px; height: 25px; top: 70%; left: 40%; animation-delay: 2s; }
+.bubble-4 { width: 15px; height: 15px; top: 80%; left: 60%; animation-delay: 3s; }
+.bubble-5 { width: 35px; height: 35px; top: 40%; left: 80%; animation-delay: 4s; }
+.bubble-6 { width: 20px; height: 20px; top: 20%; left: 15%; animation-delay: 0.5s; }
+.bubble-7 { width: 25px; height: 25px; top: 60%; left: 30%; animation-delay: 1.5s; }
+.bubble-8 { width: 30px; height: 30px; top: 45%; left: 55%; animation-delay: 2.5s; }
+.bubble-9 { width: 15px; height: 15px; top: 75%; left: 70%; animation-delay: 3.5s; }
+.bubble-10 { width: 40px; height: 40px; top: 35%; left: 85%; animation-delay: 4.5s; }
+.bubble-11 { width: 35px; height: 35px; top: 40%; left: 80%; animation-delay: 4s; }
+.bubble-12 { width: 20px; height: 20px; top: 20%; left: 15%; animation-delay: 0.5s; }
+.bubble-13 { width: 25px; height: 25px; top: 60%; left: 30%; animation-delay: 1.5s; }
+.bubble-14 { width: 30px; height: 30px; top: 45%; left: 55%; animation-delay: 2.5s; }
+.bubble-15 { width: 15px; height: 15px; top: 75%; left: 70%; animation-delay: 3.5s; }
