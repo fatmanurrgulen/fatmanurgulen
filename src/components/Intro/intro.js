@@ -29,7 +29,7 @@ const Intro = () => {
       >
         <div className="intro-glow-bg"></div>
 
-        {[...Array(15)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <div key={i} className={`bubble bubble-${i + 1}`}></div>
         ))}
 

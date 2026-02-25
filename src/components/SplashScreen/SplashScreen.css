@@ -29,7 +29,7 @@
   --splash-text: #c12a8c;
 }
 
-body.dark :root {
+body.dark {
   --splash-bg: #1a1a1a;
   --splash-text: #e09bc1;
 }

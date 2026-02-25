@@ -1,4 +1,3 @@
-// src/components/Contact/Contact.jsx
 import React, { useRef, useState } from 'react';
 import {
   Container,
@@ -18,31 +17,52 @@ import emailjs from '@emailjs/browser';
 const Contact = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
+
   const formRef = useRef();
-  const [snackbar, setSnackbar] = useState({ open: false, type: 'success', message: '' });
+
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    type: 'success',
+    message: '',
+  });
+
   const [loading, setLoading] = useState(false);
+  const [cooldown, setCooldown] = useState(false);
 
   const sendEmail = async (e) => {
     e.preventDefault();
+
+    // Honeypot kontrolü
     const honeypot = formRef.current?.elements?.honey?.value;
-    if (honeypot) return; // Bot ise çık
+    if (honeypot) return;
+
+    if (cooldown) return;
 
     setLoading(true);
+
     try {
       await emailjs.sendForm(
-        'service_qpzisf4',
-        'template_7rcebxe',
+        process.env.REACT_APP_EMAILJS_SERVICE,
+        process.env.REACT_APP_EMAILJS_TEMPLATE,
         formRef.current,
-        'WhOapzW5wpbBIxfV6'
+        process.env.REACT_APP_EMAILJS_PUBLIC
       );
+
       formRef.current.reset();
+
       setSnackbar({
         open: true,
         type: 'success',
         message: 'Mesaj başarıyla gönderildi! En kısa sürede dönüş yapacağım.',
       });
+
+      // 10 saniye tekrar gönderme engeli
+      setCooldown(true);
+      setTimeout(() => setCooldown(false), 10000);
+
     } catch (err) {
       console.error('Error:', err);
+
       setSnackbar({
         open: true,
         type: 'error',
@@ -138,7 +158,7 @@ const Contact = () => {
                   <Button
                     type="submit"
                     variant="contained"
-                    disabled={loading}
+                    disabled={loading || cooldown}
                     sx={{
                       px: 4,
                       py: 1.2,
@@ -158,7 +178,11 @@ const Contact = () => {
                       },
                     }}
                   >
-                    {loading ? 'Gönderiliyor...' : 'Gönder'}
+                    {loading
+                      ? 'Gönderiliyor...'
+                      : cooldown
+                      ? 'Lütfen Bekleyin...'
+                      : 'Gönder'}
                   </Button>
                 </motion.div>
               </Box>

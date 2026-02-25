@@ -5,9 +5,8 @@ const StyledIconCard = ({ icon, color, tooltip }) => {
   return (
     <motion.div
       whileHover={{
-        scale: 1.1,
-        rotate: 360,
-        boxShadow: `0 0 10px ${color}, 0 0 15px ${color}88`,
+        scale: 1.08,
+        rotate: 1440,
         y: -5,
       }}
       transition={{
