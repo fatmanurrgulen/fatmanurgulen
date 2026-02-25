@@ -11,7 +11,7 @@ import {
 import { useTheme, styled } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 
-// Sertifikalar
+// Sertifikalarr
 import jsCert from '../../assets/JAVASCRIPT.pdf';
 import nodeCert from '../../assets/Node.js_ile_Web_Programlama_Sertifika.pdf';
 import reactCert from '../../assets/REACT_ile_Web_Programcılığı_Sertifika.pdf';
